@@ -13,10 +13,8 @@ router.post("/new", function (req, res) {
     title: req.body.title,
     description: req.body.description,
     release_date: req.body.release_date,
-    id_tmdb: req.body.id_tmdb,
     poster_path: req.body.poster_path,
     average_rating: req.body.average_rating,
-    genre_ids: req.body.genre_ids,
   });
 
   newMovie
