@@ -34,14 +34,14 @@ router.post("/new", function (req, res) {
 
 router.delete("/", function (req, res) {
   UserModel.findById(req.body.id)
-  .then( function(user) {
-    console.log(user)
-    user.delete();
-    res.status(201).end();
-  })
-  .catch( function(error) {
-    res.status(500).json({ message: "User could not be found "})
-  })
+    .then(function (user) {
+      console.log(user);
+      user.delete();
+      res.status(201).end();
+    })
+    .catch(function (error) {
+      res.status(500).json({ message: error });
+    });
 });
 
 module.exports = router;

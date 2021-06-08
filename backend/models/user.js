@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String },
   password: { type: String },
-  myFilms: [{ type: mongoose.Types.ObjectId, ref: 'Movies' }],
+  myFilms: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
 });
 
 const UserModel = mongoose.model("UserModel", UserSchema, "users");
