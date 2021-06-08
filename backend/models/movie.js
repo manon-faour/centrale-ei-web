@@ -7,6 +7,8 @@ const MovieSchema = new mongoose.Schema({
   poster_path: { type: String },
   average_rating: { type: mongoose.Decimal128 },
   genre_ids: { type: [Number] },
+  length: { type: mongoose.Decimal128 },
+  vo: { type: String },
 });
 
 const MovieModel = mongoose.model("MovieModel", MovieSchema, "movies");
