@@ -28,7 +28,7 @@ app.use("/users", usersRouter);
 app.use("/movies", moviesRouter);
 app.use(routeNotFoundJsonHandler);
 
-populateDB(20, 1);
+// populateDB(20, 1);
 
 const port = parseInt(process.env.PORT || "3000");
 
