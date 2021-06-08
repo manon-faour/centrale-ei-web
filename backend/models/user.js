@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   lastName: { type: String },
   password: { type: String },
   myMovies: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
+  recommendedMovies: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
 });
 
 const UserModel = mongoose.model("UserModel", UserSchema, "users");

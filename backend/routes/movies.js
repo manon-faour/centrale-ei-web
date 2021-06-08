@@ -15,6 +15,7 @@ router.post("/new", function (req, res) {
     release_date: req.body.release_date,
     poster_path: req.body.poster_path,
     average_rating: req.body.average_rating,
+    genre_ids: req.body.genre_ids,
   });
 
   newMovie

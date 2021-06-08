@@ -6,6 +6,7 @@ const MovieSchema = new mongoose.Schema({
   release_date: { type: String },
   poster_path: { type: String },
   average_rating: { type: mongoose.Decimal128 },
+  genre_ids: { type: [Number] },
 });
 
 const MovieModel = mongoose.model("MovieModel", MovieSchema, "movies");
