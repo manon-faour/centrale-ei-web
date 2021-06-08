@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String },
   password: { type: String },
+  admin: { type: Boolean },
   myMovies: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
   recommendedMovies: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
 });
