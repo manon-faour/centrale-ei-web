@@ -1,4 +1,10 @@
-# centrale-ei-web
+# DogeMovie
+
+## Membres
+
+- Alexandre Auzel
+- Manon Faour
+- Vianney Ruhlmann
 
 ## Backend
 
