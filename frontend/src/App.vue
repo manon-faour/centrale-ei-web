@@ -1,9 +1,17 @@
 <template>
   <nav>
-    <router-link class="nav-link" to="/"><img src="./assets/doge.png" alt="doge photo" class="logo"></router-link>
+    <router-link class="nav-link" to="/"
+      ><img src="./assets/doge.png" alt="doge photo" class="logo"
+    /></router-link>
     <div class="searchbar">
-      <img src="./assets/search.svg" alt="search icon" class="search-logo">
-      <input v-model="searchText" type="text" @keyup.enter="search" class="search-input" placeholder="Rechercher...">
+      <img src="./assets/search.svg" alt="search icon" class="search-logo" />
+      <input
+        v-model="searchText"
+        type="text"
+        @keyup.enter="search"
+        class="search-input"
+        placeholder="Rechercher..."
+      />
     </div>
   </nav>
   <router-view />
@@ -20,28 +28,37 @@ export default {
   methods: {
     search: function () {
       console.log(this.searchText);
-    }
-  }
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 nav {
   width: 100%;
   height: 70px;
-  background: #3D5A6C;
+  background: #3d5a6c;
   display: flex;
   align-items: center;
   justify-content: flex;
 }
 
 @keyframes wiggle {
-  0% {transform: rotate(0deg);}
-  25% {transform: rotate(-30deg);}
-  50% {transform: rotate(30deg);}
-  75% {transform: rotate(-30deg);}
-  100% {transform: rotate(0deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-30deg);
+  }
+  50% {
+    transform: rotate(30deg);
+  }
+  75% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .logo {
@@ -57,7 +74,7 @@ nav {
 }
 
 .searchbar {
-  background: #BECFDA;
+  background: #becfda;
   width: 40%;
   display: flex;
   height: 45px;
@@ -84,5 +101,4 @@ nav {
   margin-left: 5px;
   fill: white;
 }
-
 </style>
