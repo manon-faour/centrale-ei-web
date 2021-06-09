@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const jsonErrorHandler = require("./services/jsonErrorHandler");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const moviesRouter = require("./routes/movies");
 const routeNotFoundJsonHandler = require("./services/routeNotFoundJsonHandler");
+const { populateDB } = require("./services/populateDB");
 
 mongoose.connect(process.env.MONGO_DB_URL, {
   useNewUrlParser: true,
@@ -23,7 +25,10 @@ app.use(jsonErrorHandler);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/movies", moviesRouter);
 app.use(routeNotFoundJsonHandler);
+
+// populateDB(20, 1);
 
 const port = parseInt(process.env.PORT || "3000");
 

@@ -13,6 +13,7 @@ router.post("/new", function (req, res) {
     email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
+    password: req.body.password,
   });
 
   newUser
@@ -28,6 +29,18 @@ router.post("/new", function (req, res) {
       } else {
         res.status(500).json({ message: "Error while creating the user" });
       }
+    });
+});
+
+router.delete("/", function (req, res) {
+  UserModel.findById(req.body.id)
+    .then(function (user) {
+      console.log(user);
+      user.delete();
+      res.status(201).end();
+    })
+    .catch(function (error) {
+      res.status(500).json({ message: error });
     });
 });
 

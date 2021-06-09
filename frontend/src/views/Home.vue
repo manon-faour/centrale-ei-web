@@ -23,11 +23,35 @@
 
 <script>
 import Caroussel from "../components/Caroussel.vue";
+import axios from "axios";
 
 export default {
   name: "Home",
+  created() {
+    this.fetchTop100();
+  },
+  data: function () {
+    return {
+      top100: [],
+      recommendedMovies: [],
+      myMovies: [],
+    };
+  },
   components: {
     Caroussel,
+  },
+  methods: {
+    fetchTop100: function () {
+      axios
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies`)
+        .then((response) => {
+          this.recommendedMovies = response.data.movies;
+          console.log(this.movies);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
