@@ -1,7 +1,7 @@
 const express = require("express");
 const MovieModel = require("../models/movie");
 const router = express.Router();
-const addMyMovies = require("../utils/addMyMovies");
+const myMovies = require("../utils/myMovies");
 
 router.get("/", function (req, res) {
   MovieModel.find({}).then(function (movies) {
@@ -29,15 +29,15 @@ router.post("/new", function (req, res) {
     });
 });
 
-router.post("/mymovies", function (req, res) {
-  try {
-    const userId = "60bf75dc6591e9a836da622a";
-    const movieId = req.body.movieId;
-    addMyMovies(userId, movieId);
-    res.status(201).end();
-  } catch (error) {
-    res.status(500).json({ message: error });
-  }
+router.post("/addmymovies", function (req, res) {
+  const userId = "60c0b549e9dad9aa14ca54c3";
+  const movieId = req.body.movieId;
+  myMovies.add(userId, movieId, res);
+});
+
+router.get("/mymovies", function (req, res) {
+  const userId = "60c0b549e9dad9aa14ca54c3";
+  myMovies.find(userId, res);
 });
 
 module.exports = router;
