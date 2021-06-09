@@ -1,7 +1,7 @@
 const UserModel = require("../models/user");
 const MovieModel = require("../models/movie");
 
-const addMyMovie = async function (userId, movieId, res) {
+const addMovie = async function (userId, movieId, res) {
   try {
     const movie = await MovieModel.findOne({ _id: movieId });
     const user = await UserModel.findOne({ _id: userId });
@@ -25,5 +25,13 @@ const findMyMovies = async function (userId, res) {
     });
 };
 
-exports.add = addMyMovie;
+// const removeMovie = async function (userId, movieId, res) {
+//   UserModel.findOne({ _id: userId }).then(function (user) {
+//     user.myMovies.pull({ _id: movieId });
+//     user.save();
+//   });
+// };
+
+exports.add = addMovie;
 exports.find = findMyMovies;
+// exports.remove = removeMovie;
