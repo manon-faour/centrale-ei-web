@@ -22,14 +22,6 @@ const findMyMovies = async function (userId, res) {
   } catch (err) {
     res.status(500).json({ message: err });
   }
-  // UserModel.findOne({ _id: userId })
-  //   .populate("myMovies")
-  //   .then(function (user) {
-  //     res.json({ movies: user.myMovies });
-  //   })
-  //   .catch(function (err) {
-  //     res.status(500).json({ message: err });
-  //   });
 };
 
 const removeMovie = async function (userId, movieId, res) {
@@ -37,7 +29,7 @@ const removeMovie = async function (userId, movieId, res) {
     .then(function (user) {
       user.myMovies.pull({ _id: movieId });
       user.save();
-      res.status(201);
+      res.status(201).end();
     })
     .catch(function (err) {
       res.status(500).json({ message: err });
