@@ -2,6 +2,7 @@ const express = require("express");
 const MovieModel = require("../models/movie");
 const UserModel = require("../models/user");
 const router = express.Router();
+const evals = require("../utils/evals");
 
 router.get("/", function (req, res) {
   MovieModel.find({}).then(function (movies) {
@@ -26,6 +27,38 @@ router.post("/new", function (req, res) {
     })
     .catch(function (error) {
       res.status(500).json({ message: error });
+    });
+});
+
+router.post("/eval", function (req, res) {
+  const movieId = req.body.movieId;
+  const userId = req.body.userId;
+  const evaluation = req.body.eval;
+  evals
+    .eval(userId, movieId, evaluation)
+    .then(function (newDocument) {
+      res.status(201).json(newDocument);
+      return true;
+    })
+    .catch(function (error) {
+      res.status(500).json({ message: error });
+    });
+});
+
+router.get("/eval", function (req, res) {
+  const movieId = req.body.movieId;
+  const userId = req.body.userId;
+  evals
+    .find(userId, movieId)
+    .then(function (evaluation) {
+      if (evaluation) {
+        res.status(201).json({ eval: evaluation.eval });
+        return;
+      }
+      res.status(201).json({ eval: 0 });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
     });
 });
 
