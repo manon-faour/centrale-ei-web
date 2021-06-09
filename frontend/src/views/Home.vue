@@ -1,12 +1,30 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <h1>Welcome to Doge Movies</h1>
+    <img alt="doge photo" src="../assets/doge.png" class="logo" />
+    <h1>DogeMovies</h1>
+    <Caroussel
+      :movies="[
+        { title: 'Youpi' },
+        { title: '2' },
+        { title: '3' },
+        { title: '4' },
+        { title: '5' },
+        { title: '6' },
+        { title: '7' },
+        { title: '8' },
+        { title: '9' },
+        { title: '10' },
+        { title: '11' },
+        { title: '12' },
+      ]"
+    />
   </div>
 </template>
 
 <script>
+import Caroussel from "../components/Caroussel.vue";
 import axios from "axios";
+
 export default {
   name: "Home",
   created() {
@@ -18,6 +36,9 @@ export default {
       recommendedMovies: [],
       myMovies: [],
     };
+  },
+  components: {
+    Caroussel,
   },
   methods: {
     fetchTop100: function () {
@@ -38,24 +59,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .home {
+  padding: 20px;
   text-align: center;
 }
 
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.logo {
+  height: 200px;
 }
 </style>
