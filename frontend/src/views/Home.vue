@@ -61,7 +61,7 @@ export default {
   methods: {
     fetchTop100: function () {
       axios
-        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies`)
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/`)
         .then((response) => {
           this.recommendedMovies = response.data.movies;
           console.log(this.recommendedMovies);

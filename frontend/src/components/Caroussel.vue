@@ -52,7 +52,6 @@ export default {
     return {
       currentTab: 1,
       moviesToDisplay: 5,
-      maxTab: 1,
       animation: "",
       animated: false,
     };
@@ -64,6 +63,9 @@ export default {
     Movie,
   },
   computed: {
+    maxTab: function () {
+      return Math.ceil(this.movies.length / this.moviesToDisplay);
+    },
     displayedMovies: function () {
       return this.movies.slice(
         (this.currentTab - 1) * this.moviesToDisplay,
@@ -134,9 +136,6 @@ export default {
       this.animation = "animate-next";
       setTimeout(this.animationNextStop, 1000);
     },
-  },
-  created: function () {
-    this.maxTab = Math.ceil(this.movies.length / this.moviesToDisplay);
   },
   updated: function () {
     console.log(this.nextMovies);
