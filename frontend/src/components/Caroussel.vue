@@ -51,7 +51,7 @@ export default {
   data: function () {
     return {
       currentTab: 1,
-      moviesToDisplay: 3,
+      moviesToDisplay: 5,
       maxTab: 1, // Nombre d'onglets à afficher
       displayedMovies: [],
       previousMovies: [],
@@ -168,7 +168,7 @@ export default {
 }
 
 .movie-container {
-  width: 900px;
+  width: 1500px;
   padding: 10px 0px;
   overflow: hidden;
 }
@@ -177,21 +177,21 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  transform: translateX(-900px);
+  transform: translateX(-1500px);
 }
 
 .displayed-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: auto;
+  min-width: 1500px;
 }
 
 .hidden-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: auto;
+  min-width: 1500px;
 }
 
 @keyframes next {
