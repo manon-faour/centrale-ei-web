@@ -1,9 +1,6 @@
 <template>
   <div class="image-box">
-    <img
-      src="https://image.tmdb.org/t/p/w342/AeNt8dFEpw0b3OTnyszwgCDLnzJ.jpg"
-      :alt="movie.title"
-    />
+    <img v-bind:src="movie.poster_path" :alt="movie.title" />
     <div class="title">
       {{ movie.title }}
     </div>

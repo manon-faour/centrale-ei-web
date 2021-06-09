@@ -3,20 +3,7 @@
     <img alt="doge photo" src="../assets/doge.png" class="logo" />
     <h1>DogeMovies</h1>
     <h2>Top 10</h2>
-    <Caroussel
-      :movies="[
-        { title: 'Youpi' },
-        { title: '2' },
-        { title: '3' },
-        { title: '4' },
-        { title: '5' },
-        { title: '6' },
-        { title: '7' },
-        { title: '8' },
-        { title: '9' },
-        { title: '10' },
-      ]"
-    />
+    <Caroussel :movies="recommendedMovies.slice(0, 10)" />
     <h2>Pour vous</h2>
     <Caroussel
       :movies="[
@@ -64,7 +51,7 @@ export default {
   data: function () {
     return {
       top100: [],
-      recommendedMovies: [],
+      recommendedMovies: [{ title: "coucou" }],
       myMovies: [],
     };
   },
@@ -74,7 +61,7 @@ export default {
   methods: {
     fetchTop100: function () {
       axios
-        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies`)
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies`)
         .then((response) => {
           this.recommendedMovies = response.data.movies;
           console.log(this.recommendedMovies);

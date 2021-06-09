@@ -52,10 +52,7 @@ export default {
     return {
       currentTab: 1,
       moviesToDisplay: 5,
-      maxTab: 1, // Nombre d'onglets à afficher
-      displayedMovies: [],
-      previousMovies: [],
-      nextMovies: [],
+      maxTab: 1,
       animation: "",
       animated: false,
     };
@@ -66,22 +63,58 @@ export default {
   components: {
     Movie,
   },
-  methods: {
-    previousDisplay: function () {
-      this.animation = "";
-      this.nextMovies = this.displayedMovies;
-      this.displayedMovies = this.previousMovies;
+  computed: {
+    displayedMovies: function () {
+      return this.movies.slice(
+        (this.currentTab - 1) * this.moviesToDisplay,
+        this.maxTab === this.currentTab
+          ? this.movies.length
+          : this.currentTab * this.moviesToDisplay
+      );
+    },
+    previousMovies: function () {
       if (this.currentTab === 1) {
-        this.previousMovies = this.movies.slice(
-          (this.maxTab - 1) * this.moviesToDisplay
-        );
-      } else {
-        this.previousMovies = this.movies.slice(
-          (this.currentTab - 2) * this.moviesToDisplay,
-          (this.currentTab - 1) * this.moviesToDisplay
+        return this.movies.slice((this.maxTab - 1) * this.moviesToDisplay);
+      }
+      return this.movies.slice(
+        (this.currentTab - 2) * this.moviesToDisplay,
+        (this.currentTab - 1) * this.moviesToDisplay
+      );
+    },
+    nextMovies: function () {
+      if (this.currentTab === this.maxTab) {
+        return this.movies.slice(
+          0,
+          this.maxTab === 1 ? this.movies.length : this.moviesToDisplay
         );
       }
+      return this.movies.slice(
+        this.currentTab * this.moviesToDisplay,
+        this.maxTab === this.currentTab + 1
+          ? this.movies.length
+          : this.moviesToDisplay * (this.currentTab + 1)
+      );
+    },
+  },
+  methods: {
+    animationPreviousStop: function () {
+      this.animation = "";
       this.animated = false;
+      if (this.currentTab > 1) {
+        this.currentTab -= 1;
+      } else {
+        this.currentTab = this.maxTab;
+      }
+    },
+
+    animationNextStop: function () {
+      this.animation = "";
+      this.animated = false;
+      if (this.currentTab < this.maxTab) {
+        this.currentTab += 1;
+      } else {
+        this.currentTab = 1;
+      }
     },
 
     previous: function () {
@@ -89,33 +122,8 @@ export default {
         return;
       }
       this.animated = true;
-      if (this.currentTab > 1) {
-        this.currentTab -= 1;
-      } else {
-        this.currentTab = this.maxTab;
-      }
       this.animation = "animate-previous";
-      setTimeout(this.previousDisplay, 1000);
-    },
-
-    nextDisplay: function () {
-      this.animation = "";
-      this.previousMovies = this.displayedMovies;
-      this.displayedMovies = this.nextMovies;
-      if (this.currentTab === this.maxTab) {
-        this.nextMovies = this.movies.slice(
-          0,
-          this.maxTab === 1 ? this.movies.length : this.moviesToDisplay
-        );
-      } else {
-        this.nextMovies = this.movies.slice(
-          this.currentTab * this.moviesToDisplay,
-          this.maxTab - 1 === this.currentTab
-            ? this.movies.length
-            : this.moviesToDisplay * (this.currentTab + 1)
-        );
-      }
-      this.animated = false;
+      setTimeout(this.animationPreviousStop, 1000);
     },
 
     next: function () {
@@ -123,34 +131,15 @@ export default {
         return;
       }
       this.animated = true;
-      if (this.currentTab < this.maxTab) {
-        this.currentTab += 1;
-      } else {
-        this.currentTab = 1;
-      }
       this.animation = "animate-next";
-      setTimeout(this.nextDisplay, 1000);
+      setTimeout(this.animationNextStop, 1000);
     },
   },
   created: function () {
     this.maxTab = Math.ceil(this.movies.length / this.moviesToDisplay);
-    this.displayedMovies = this.movies.slice(0, this.moviesToDisplay);
-    this.previousMovies = this.movies.slice(
-      (this.maxTab - 1) * this.moviesToDisplay
-    );
-    switch (this.maxTab) {
-      case 1:
-        this.nextMovies = this.movies;
-        break;
-      case 2:
-        this.nextMovies = this.movies.slice(this.moviesToDisplay);
-        break;
-      default:
-        this.nextMovies = this.movies.slice(
-          this.moviesToDisplay,
-          2 * this.moviesToDisplay
-        );
-    }
+  },
+  updated: function () {
+    console.log(this.nextMovies);
   },
 };
 </script>
