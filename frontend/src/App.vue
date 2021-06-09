@@ -48,6 +48,7 @@ nav {
   height: 50px;
   margin-left: 15px;
   margin-right: 15px;
+  transition: 0.4s ease;
 }
 
 .logo:hover {
@@ -70,6 +71,7 @@ nav {
   border: 0px;
   background: transparent;
   margin-left: 5px;
+  font-size: 18px;
 }
 
 .search-input:focus {
