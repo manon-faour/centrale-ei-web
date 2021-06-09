@@ -6,8 +6,8 @@ const UserSchema = new mongoose.Schema({
   lastName: { type: String },
   password: { type: String },
   admin: { type: Boolean },
-  myMovies: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
-  recommendedMovies: [{ type: mongoose.Types.ObjectId, ref: "Movies" }],
+  myMovies: [{ type: mongoose.Types.ObjectId, ref: "MovieModel" }],
+  recommendedMovies: [{ type: mongoose.Types.ObjectId, ref: "MovieModel" }],
 });
 
 const UserModel = mongoose.model("UserModel", UserSchema, "users");
