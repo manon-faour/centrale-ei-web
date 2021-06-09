@@ -29,7 +29,7 @@ router.post("/new", function (req, res) {
     });
 });
 
-router.post("/mymovies/add", function (req, res) {
+router.post("/mymovies", function (req, res) {
   const userId = "60c0b549e9dad9aa14ca54c3";
   const movieId = req.body.movieId;
   myMovies.add(userId, movieId, res);
