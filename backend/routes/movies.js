@@ -105,7 +105,7 @@ router.post("/eval", function (req, res) {
     .then(function (newDocument) {
       rating.average(movieId);
       recoMovies(userId).then(function (recommended) {
-        console.log(recommended);
+        console.log("recommended: ", recommended);
         UserModel.findOneAndUpdate(
           {
             _id: userId,
@@ -168,7 +168,6 @@ router.get("/mymovies/:userId", async function (req, res) {
   const userId = req.params.userId;
   try {
     const user = await UserModel.findOne({ _id: userId }).populate("myMovies");
-    console.log(user);
     res.status(201).json({ movies: user.myMovies });
   } catch (err) {
     res.status(500).json({ message: err.message });

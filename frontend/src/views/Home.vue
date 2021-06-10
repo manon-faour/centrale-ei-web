@@ -12,6 +12,8 @@
         <input v-model="user_email" id="email" />
       </div>
       <button @click="connect">Connexion</button>
+      <label>Ou bien inscris toi</label>
+      <button @click="signIn">Inscription</button>
     </div>
 
     <div v-if="user_id !== -1" class="perso">
@@ -108,11 +110,12 @@ export default {
             String(user_mail)
         )
         .then((response) => {
-          console.log("connected");
+          console.log("connected: ", response);
           this.user_id = response.data.user._id;
           localStorage.user_id = response.data.user._id;
           this.fetchMyMovies(this.user_id);
           this.fetchReco(this.user_id);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -120,7 +123,6 @@ export default {
     },
     connect: function () {
       this.getId(this.user_email);
-      window.location.reload();
     },
   },
 };

@@ -52,7 +52,6 @@ router.get("/recommended/:id", function (req, res) {
   UserModel.findOne({ _id: req.params.id })
     .populate("recommendedMovies")
     .then(function (user) {
-      console.log(user);
       res.status(201).json({ movies: user.recommendedMovies });
     })
     .catch(function (err) {
@@ -94,7 +93,6 @@ router.delete("/:id", function (req, res) {
   UserModel.findById(req.params.id)
     .then(function (user) {
       EvalModel.deleteMany({ user: req.params.id }).then(function () {
-        console.log(user);
         user.delete();
         res.status(201).end();
       });
