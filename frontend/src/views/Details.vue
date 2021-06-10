@@ -7,7 +7,15 @@
     />
     <div class="infos">
       <h2>{{ movie.title }}</h2>
-      <div class="genres"></div>
+      <div class="genres">
+        <div
+          class="genre"
+          v-for="genre_id in movie.genre_ids"
+          v-bind:key="genre_id"
+        >
+          {{ genres.filter((genre) => genre.id === genre_id)[0].name }}
+        </div>
+      </div>
       <p class="date">
         Sorti le
         {{ date }}
@@ -122,6 +130,84 @@ export default {
       loaded: false,
       user_id: -1,
       connected: false,
+      genres: [
+        {
+          id: 28,
+          name: "Action",
+        },
+        {
+          id: 12,
+          name: "Adventure",
+        },
+        {
+          id: 16,
+          name: "Animation",
+        },
+        {
+          id: 35,
+          name: "Comedy",
+        },
+        {
+          id: 80,
+          name: "Crime",
+        },
+        {
+          id: 99,
+          name: "Documentary",
+        },
+        {
+          id: 18,
+          name: "Drama",
+        },
+        {
+          id: 10751,
+          name: "Family",
+        },
+        {
+          id: 14,
+          name: "Fantasy",
+        },
+        {
+          id: 36,
+          name: "History",
+        },
+        {
+          id: 27,
+          name: "Horror",
+        },
+        {
+          id: 10402,
+          name: "Music",
+        },
+        {
+          id: 9648,
+          name: "Mystery",
+        },
+        {
+          id: 10749,
+          name: "Romance",
+        },
+        {
+          id: 878,
+          name: "Science Fiction",
+        },
+        {
+          id: 10770,
+          name: "TV Movie",
+        },
+        {
+          id: 53,
+          name: "Thriller",
+        },
+        {
+          id: 10752,
+          name: "War",
+        },
+        {
+          id: 37,
+          name: "Western",
+        },
+      ],
     };
   },
   computed: {
@@ -243,5 +329,21 @@ export default {
 }
 .red {
   color: red;
+}
+.genres {
+  display: flex;
+  flex-direction: row;
+}
+.genre {
+  font-size: 1em;
+  border-radius: 10px;
+  background: rgb(172, 172, 172);
+  padding: 5px;
+  margin: 5px;
+  transition: 0.4s;
+}
+
+.genre:hover {
+  background: rgb(209, 209, 209);
 }
 </style>
