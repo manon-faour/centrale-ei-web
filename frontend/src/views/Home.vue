@@ -3,39 +3,11 @@
     <img alt="doge photo" src="../assets/doge.png" class="logo" />
     <h1>DogeMovies</h1>
     <h2>Top 10</h2>
-    <Caroussel :movies="recommendedMovies.slice(0, 10)" />
-    <h2>Pour vous</h2>
-    <Caroussel
-      :movies="[
-        { title: 'Youpi' },
-        { title: '2' },
-        { title: '3' },
-        { title: '4' },
-        { title: '5' },
-        { title: '6' },
-        { title: '7' },
-        { title: '8' },
-        { title: '9' },
-        { title: '10' },
-        { title: '11' },
-        { title: '12' },
-      ]"
-    />
+    <Caroussel :movies="top10" />
+    <!--     <h2>Pour vous</h2>
+    <Caroussel :movies="" /> -->
     <h2>Mes Films</h2>
-    <Caroussel
-      :movies="[
-        { title: 'Youpi' },
-        { title: '2' },
-        { title: '3' },
-        { title: '4' },
-        { title: '5' },
-        { title: '6' },
-        { title: '7' },
-        { title: '8' },
-        { title: '9' },
-        { title: '10' },
-      ]"
-    />
+    <Caroussel :movies="myMovies" />
   </div>
 </template>
 
@@ -50,8 +22,8 @@ export default {
   },
   data: function () {
     return {
-      top100: [],
-      recommendedMovies: [{ title: "coucou" }],
+      top10: [],
+      recommendedMovies: [],
       myMovies: [],
     };
   },
@@ -59,12 +31,21 @@ export default {
     Caroussel,
   },
   methods: {
-    fetchTop100: function () {
+    fetchTop10: function () {
       axios
-        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/`)
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/top/10`)
         .then((response) => {
-          this.recommendedMovies = response.data.movies;
-          console.log(this.recommendedMovies);
+          this.top10 = response.data.movies;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    fetchMyMovies: function () {
+      axios
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies`)
+        .then((response) => {
+          this.myMovies = response.data.movies;
         })
         .catch((error) => {
           console.log(error);
