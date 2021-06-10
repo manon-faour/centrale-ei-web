@@ -1,12 +1,23 @@
 const express = require("express");
 const MovieModel = require("../models/movie");
+const UserModel = require("../models/user");
 const router = express.Router();
-const myMovies = require("../utils/myMovies");
+const evals = require("../utils/evals");
+const rating = require("../utils/rating");
 
 router.get("/", function (req, res) {
   MovieModel.find({}).then(function (movies) {
     res.json({ movies: movies });
   });
+});
+
+router.get("/top", function (req, res) {
+  MovieModel.find({})
+    .sort({ average_rating: -1 })
+    .limit(req.body.limit)
+    .then(function (movies) {
+      res.status(201).json({ movies: movies });
+    });
 });
 
 router.post("/new", function (req, res) {
@@ -29,21 +40,77 @@ router.post("/new", function (req, res) {
     });
 });
 
-router.post("/mymovies", function (req, res) {
-  const userId = "60c0b549e9dad9aa14ca54c3";
+router.post("/eval", function (req, res) {
   const movieId = req.body.movieId;
-  myMovies.add(userId, movieId, res);
+  const userId = req.body.userId;
+  const evaluation = req.body.eval;
+  evals
+    .eval(userId, movieId, evaluation)
+    .then(function (newDocument) {
+      rating.average(movieId);
+      res.status(201).json(newDocument);
+      return true;
+    })
+    .catch(function (error) {
+      res.status(500).json({ message: error });
+    });
 });
 
-router.get("/mymovies", function (req, res) {
+router.get("/eval", function (req, res) {
+  const movieId = req.body.movieId;
+  const userId = req.body.userId;
+  evals
+    .find(userId, movieId)
+    .then(function (evaluation) {
+      if (evaluation) {
+        res.status(201).json({ eval: evaluation.eval });
+        return;
+      }
+      res.status(201).json({ eval: 0 });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
+router.post("/mymovies", async function (req, res) {
   const userId = "60c0b549e9dad9aa14ca54c3";
-  myMovies.find(userId, res);
+  const movieId = req.body.movieId;
+  try {
+    const movie = await MovieModel.findOne({ _id: movieId });
+    const user = await UserModel.findOne({ _id: userId });
+
+    user.myMovies.push(movie);
+    user.save();
+    res.status(201).json({ message: "all good" });
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+});
+
+router.get("/mymovies", async function (req, res) {
+  const userId = "60c0b549e9dad9aa14ca54c3";
+  try {
+    const user = await UserModel.findOne({ _id: userId }).populate("myMovies");
+    console.log(user);
+    res.status(201).json({ movies: user.myMovies });
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
 });
 
 router.delete("/mymovies", function (req, res) {
   const userId = "60c0b549e9dad9aa14ca54c3";
   const movieId = req.body.movieId;
-  myMovies.remove(userId, movieId, res);
+  UserModel.findOne({ _id: userId })
+    .then(function (user) {
+      user.myMovies.pull({ _id: movieId });
+      user.save();
+      res.status(201).end();
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err });
+    });
 });
 
 module.exports = router;
