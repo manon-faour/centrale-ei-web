@@ -13,7 +13,10 @@
         placeholder="Rechercher..."
       />
     </div>
-    <p>{{ user_name }}</p>
+    <div class="user_block">
+      <p v-if="connected" class="user_name">{{ user_name }}</p>
+      <button v-if="connected" @click="logout">Déconnexion</button>
+    </div>
   </nav>
   <router-view />
 </template>
@@ -34,6 +37,11 @@ export default {
     search: function () {
       console.log(this.searchText);
     },
+    logout: function () {
+      localStorage.removeItem("user_id");
+      this.connected = false;
+      window.location.reload();
+    },
   },
   created() {
     if (localStorage.user_id) {
@@ -44,8 +52,7 @@ export default {
         )
         .then((response) => {
           this.user_name = response.data.user.firstName;
-          this.fetchMyMovies(this.user_id);
-          this.fetchReco(this.user_id);
+          this.connected = true;
         })
         .catch((error) => {
           console.log(error);
@@ -122,5 +129,8 @@ nav {
   margin-bottom: 5px;
   margin-left: 5px;
   fill: white;
+}
+
+.user_name {
 }
 </style>

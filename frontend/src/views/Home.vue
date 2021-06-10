@@ -106,6 +106,7 @@ export default {
             String(user_mail)
         )
         .then((response) => {
+          console.log("connected");
           this.user_id = response.data.user._id;
           localStorage.user_id = response.data.user._id;
           this.fetchMyMovies(this.user_id);
@@ -117,6 +118,7 @@ export default {
     },
     connect: function () {
       this.getId(this.user_email);
+      window.location.reload();
     },
   },
 };
