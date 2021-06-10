@@ -35,7 +35,10 @@ export default {
   },
   methods: {
     search: function () {
-      console.log(this.searchText);
+      this.$router.replace({
+        name: "Results",
+        query: { search: this.searchText },
+      });
     },
     logout: function () {
       localStorage.removeItem("user_id");
