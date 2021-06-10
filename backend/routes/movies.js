@@ -20,7 +20,7 @@ router.get("/top/:nb", function (req, res) {
     });
 });
 
-router.get("/movie/:id", function (req, res) {
+router.get("/:id", function (req, res) {
   MovieModel.find({ _id: req.params.id })
     .then(function (movie) {
       res.status(201).json({ movie: movie });
