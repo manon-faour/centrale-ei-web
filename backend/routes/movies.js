@@ -2,16 +2,23 @@ const express = require("express");
 const MovieModel = require("../models/movie");
 const UserModel = require("../models/user");
 const router = express.Router();
-const evals = require("../utils/evals");
-const rating = require("../utils/rating");
+const evals = require("../services/evals");
+const rating = require("../services/rating");
 const { recoMovies } = require("../services/algoReco");
+const { updateCoefs } = require("../services/setupcoef");
 
+/**
+ * returns all movies
+ */
 router.get("/", function (req, res) {
   MovieModel.find({}).then(function (movies) {
     res.json({ movies: movies });
   });
 });
 
+/**
+ * returns the top {{ nb }} movies, ordered by the evaluations they were given
+ */
 router.get("/top/:nb", function (req, res) {
   MovieModel.find({})
     .sort({ average_rating: -1 })
@@ -21,6 +28,9 @@ router.get("/top/:nb", function (req, res) {
     });
 });
 
+/**
+ * returns a specific movie based on its id
+ */
 router.get("/:id", function (req, res) {
   MovieModel.find({ _id: req.params.id })
     .then(function (movie) {
@@ -31,6 +41,9 @@ router.get("/:id", function (req, res) {
     });
 });
 
+/**
+ * returns all movies of a specific genre
+ */
 router.get("/genre/:id", function (req, res) {
   MovieModel.find({ genre_ids: req.params.id })
     .then(function (movies) {
@@ -41,6 +54,9 @@ router.get("/genre/:id", function (req, res) {
     });
 });
 
+/**
+ * returns movies whose title contains the query
+ */
 router.get("/search/:query", function (req, res) {
   MovieModel.find({ title: { $regex: req.params.query, $options: "i" } })
     .then(function (movies) {
@@ -51,6 +67,9 @@ router.get("/search/:query", function (req, res) {
     });
 });
 
+/**
+ * posts a new movie to add to the collection
+ */
 router.post("/new", function (req, res) {
   const newMovie = new MovieModel({
     title: req.body.title,
@@ -64,6 +83,7 @@ router.post("/new", function (req, res) {
   newMovie
     .save()
     .then(function (newDocument) {
+      updateCoefs(newDocument._id);
       res.status(201).json(newDocument);
     })
     .catch(function (err) {
@@ -71,6 +91,10 @@ router.post("/new", function (req, res) {
     });
 });
 
+/**
+ * evaluates a movie. This function then updates the top movies,
+ * and also updates the recommendations for the user that voted.
+ */
 router.post("/eval", function (req, res) {
   const movieId = req.body.movieId;
   const userId = req.body.userId;
@@ -98,6 +122,9 @@ router.post("/eval", function (req, res) {
     });
 });
 
+/**
+ * gets the evaluation of a specific movie from a specific user
+ */
 router.get("/eval/:userId/:movieId", function (req, res) {
   const movieId = req.params.movieId;
   const userId = req.params.userId;
@@ -115,6 +142,9 @@ router.get("/eval/:userId/:movieId", function (req, res) {
     });
 });
 
+/**
+ * adds a movie to a user's "myMovies"
+ */
 router.post("/mymovies/:userId/:movieId", async function (req, res) {
   const userId = req.params.userId;
   const movieId = req.params.movieId;
@@ -130,6 +160,9 @@ router.post("/mymovies/:userId/:movieId", async function (req, res) {
   }
 });
 
+/**
+ * gets all movies that are in the collection "myMovies" of a user
+ */
 router.get("/mymovies/:userId", async function (req, res) {
   const userId = req.params.userId;
   try {
@@ -141,6 +174,9 @@ router.get("/mymovies/:userId", async function (req, res) {
   }
 });
 
+/**
+ * removes a movie from a user's "myMovies" collection
+ */
 router.delete("/mymovies/:userId/:movieId", function (req, res) {
   const userId = req.params.userId;
   const movieId = req.params.movieId;
