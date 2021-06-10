@@ -164,22 +164,26 @@ const recoMovies = function(userId) {
 
 
         var notesPredict = [];
-
+        console.log(allMovies)
         for (var i = 0; i < allMovies.length; i++) {
             const movie = allMovies[i];
+            console.log(movie.title, i);
+
             if (!moviesNoted.includes(movie.id)){
                 const vect = await vectorizeMovieStandard(movie.id);
                 const neighbors = await findNeighbors(vect, moviesNoted)
                 var sumCoef=0;
                 var sumAbs=0;
-                for (var i = 0; i < neighbors.length; i++) {
-                    sumAbs += Math.abs(neighbors[i].sim);
-                    sumCoef += neighbors[i].sim*notesUser[neighbors[i].neighbor];
+                for (var j = 0; j < neighbors.length; j++) {
+                    sumAbs += Math.abs(neighbors[j].sim);
+                    sumCoef += neighbors[j].sim*notesUser[neighbors[j].neighbor];
                 }
                 if(sumAbs != 0){
                     notesPredict.push({"id_movie": movie.id, "note": sumCoef/sumAbs})
                 }
             }
+            console.log("end of: ", movie.title);
+
         }
 
         notesPredict.sort(function(a,b) {
