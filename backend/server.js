@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(jsonErrorHandler);
 
 app.use("/api/", indexRouter);
-app.use("/users/api", usersRouter);
-app.use("/movies/api", moviesRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/movies", moviesRouter);
 app.use(routeNotFoundJsonHandler);
 
 if (POPULATE) {
