@@ -124,6 +124,7 @@ export default {
       this.user_id = localStorage.user_id;
       this.connected = true;
       this.fetchUserVote();
+      this.fetchAdded();
     }
   },
   data: function () {
@@ -320,6 +321,21 @@ export default {
           console.log(error);
         });
     },
+    fetchAdded: function () {
+      axios
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies/${this.user_id}`
+        )
+        .then((response) => {
+          this.added = response.data.movies
+            .map((movie) => movie._id)
+            .includes(this.$route.query.id);
+          console.log(response.data.movie);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
@@ -350,6 +366,7 @@ export default {
 }
 .stars {
   display: flex;
+  align-self: center;
   flex-direction: row;
 }
 .rating {
@@ -389,7 +406,7 @@ export default {
 button {
   width: 250px;
   padding: 10px;
-  margin: 20px;
+  margin: 20px 0px;
 }
 .add {
   background: #48acf0;
