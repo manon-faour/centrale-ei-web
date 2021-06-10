@@ -192,13 +192,14 @@ h2 {
   font-size: 0.8em;
 }
 button {
-  width: 250px;
-  font-size: 1.3em;
-  margin: 20px;
-  background: #becfda;
+  width: 200px;
+  font-size: 1.4em;
+  margin: 30px;
+  border-radius: 20px;
+  background: #48acf0;
   border: none;
 }
 button:hover {
-  background: #d4e7f3;
+  background: #70bef3;
 }
 </style>

@@ -13,9 +13,15 @@
         placeholder="Rechercher..."
       />
     </div>
-    <div class="user_block">
-      <p v-if="connected" class="user_name">{{ user_name }}</p>
-      <button v-if="connected" @click="logout">Déconnexion</button>
+    <div class="user-block">
+      <p v-if="connected" class="user-name">{{ user_name }}</p>
+      <img
+        src="./assets/logout.svg"
+        alt="logout icon"
+        class="logout-icon"
+        v-if="connected"
+        @click="logout"
+      />
     </div>
   </nav>
   <router-view />
@@ -71,8 +77,9 @@ nav {
   height: 70px;
   background: #3d5a6c;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex;
 }
 
 @keyframes wiggle {
@@ -112,9 +119,7 @@ nav {
   height: 45px;
   border-radius: 10px;
   align-items: center;
-  margin-left: 25%;
 }
-
 .search-input {
   width: 100%;
   border: 0px;
@@ -134,6 +139,18 @@ nav {
   fill: white;
 }
 
-.user_name {
+.user-block {
+  display: flex;
+}
+.user-name {
+  font-size: 1.4em;
+}
+.logout-icon {
+  width: 30px;
+  margin: 0px 10px;
+  transition: 0.2s;
+}
+.logout-icon:hover {
+  transform: translateX(5px);
 }
 </style>
