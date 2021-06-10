@@ -5,6 +5,7 @@ const router = express.Router();
 const evals = require("../utils/evals");
 const rating = require("../utils/rating");
 const { recoMovies } = require("../services/algoReco");
+const { updateCoefs } = require("../services/setupcoef");
 
 /**
  * returns all movies
@@ -82,6 +83,7 @@ router.post("/new", function (req, res) {
   newMovie
     .save()
     .then(function (newDocument) {
+      updateCoefs(newDocument._id);
       res.status(201).json(newDocument);
     })
     .catch(function (err) {

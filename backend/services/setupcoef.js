@@ -23,6 +23,8 @@ const setupcoef = async () => {
 
 /**
  * updates the coefficients, called when a new movie is added
+ * @param  {Number} id_movie id of the movie that was added
+ * @return {undefined}
  */
 const updateCoefs = (id_movie) => {
   // eslint-disable-next-line no-undef
