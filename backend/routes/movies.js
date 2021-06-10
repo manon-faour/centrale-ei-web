@@ -4,6 +4,7 @@ const UserModel = require("../models/user");
 const router = express.Router();
 const evals = require("../utils/evals");
 const rating = require("../utils/rating");
+const { recoMovies } = require("../services/algoReco");
 
 router.get("/", function (req, res) {
   MovieModel.find({}).then(function (movies) {
@@ -78,8 +79,19 @@ router.post("/eval", function (req, res) {
     .eval(userId, movieId, evaluation)
     .then(function (newDocument) {
       rating.average(movieId);
-      res.status(201).json(newDocument);
-      return true;
+      recoMovies(userId).then(function (recommended) {
+        console.log(recommended);
+        UserModel.findOneAndUpdate(
+          {
+            _id: userId,
+          },
+          { recommendedMovies: recommended },
+          { new: true }
+        ).then(function () {
+          res.status(201).json(newDocument);
+          return;
+        });
+      });
     })
     .catch(function (err) {
       res.status(500).json({ message: err.message });

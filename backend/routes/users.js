@@ -12,6 +12,17 @@ router.get("/", function (req, res) {
     });
 });
 
+router.get("/recommended/:id", function (req, res) {
+  UserModel.find({ _id: req.params.id })
+    .populate("recommendedMovies")
+    .then(function (user) {
+      res.status(201).json({ movies: user.recommendedMovies });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
 router.post("/new", function (req, res) {
   const newUser = new UserModel({
     email: req.body.email,
