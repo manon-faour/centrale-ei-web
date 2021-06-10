@@ -7,7 +7,19 @@
     />
     <div class="infos">
       <h2>{{ movie.title }}</h2>
-      <p class="date">Sorti le {{ movie.release_date }}</p>
+      <div class="genres">
+        <div
+          class="genre"
+          v-for="genre_id in movie.genre_ids"
+          v-bind:key="genre_id"
+        >
+          {{ genres.filter((genre) => genre.id === genre_id)[0].name }}
+        </div>
+      </div>
+      <p class="date">
+        Sorti le
+        {{ date }}
+      </p>
       <p class="description">{{ movie.description }}</p>
       <p class="rating">
         <span :class="color">
@@ -16,7 +28,7 @@
         </span>
       </p>
 
-      <div class="stars">
+      <div v-if="connected" class="stars">
         <div
           class="star"
           v-on:click="onVote(1)"
@@ -104,7 +116,11 @@ export default {
   name: "Home",
   created() {
     this.fetchMovie();
-    this.fetchUserVote();
+    if (localStorage.user_id) {
+      this.user_id = localStorage.user_id;
+      this.connected = true;
+      this.fetchUserVote();
+    }
   },
   data: function () {
     return {
@@ -112,6 +128,86 @@ export default {
       displayedVote: 0,
       movie: {},
       loaded: false,
+      user_id: -1,
+      connected: false,
+      genres: [
+        {
+          id: 28,
+          name: "Action",
+        },
+        {
+          id: 12,
+          name: "Adventure",
+        },
+        {
+          id: 16,
+          name: "Animation",
+        },
+        {
+          id: 35,
+          name: "Comedy",
+        },
+        {
+          id: 80,
+          name: "Crime",
+        },
+        {
+          id: 99,
+          name: "Documentary",
+        },
+        {
+          id: 18,
+          name: "Drama",
+        },
+        {
+          id: 10751,
+          name: "Family",
+        },
+        {
+          id: 14,
+          name: "Fantasy",
+        },
+        {
+          id: 36,
+          name: "History",
+        },
+        {
+          id: 27,
+          name: "Horror",
+        },
+        {
+          id: 10402,
+          name: "Music",
+        },
+        {
+          id: 9648,
+          name: "Mystery",
+        },
+        {
+          id: 10749,
+          name: "Romance",
+        },
+        {
+          id: 878,
+          name: "Science Fiction",
+        },
+        {
+          id: 10770,
+          name: "TV Movie",
+        },
+        {
+          id: 53,
+          name: "Thriller",
+        },
+        {
+          id: 10752,
+          name: "War",
+        },
+        {
+          id: 37,
+          name: "Western",
+        },
+      ],
     };
   },
   computed: {
@@ -119,10 +215,10 @@ export default {
       if (!this.loaded) {
         return "";
       }
-      if (this.movie.average_rating.$numberDecimal < 1) {
+      if (this.movie.average_rating.$numberDecimal < 2) {
         return "red";
       }
-      if (this.movie.average_rating.$numberDecimal < 2.5) {
+      if (this.movie.average_rating.$numberDecimal < 3) {
         return "orange";
       }
       if (this.movie.average_rating.$numberDecimal < 4) {
@@ -130,6 +226,16 @@ export default {
       }
 
       return "green";
+    },
+    date: function () {
+      if (!this.loaded) {
+        return "";
+      }
+      return new Date(this.movie.release_date).toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
     },
   },
   watch: {
@@ -156,7 +262,7 @@ export default {
     fetchUserVote: function () {
       axios
         .get(
-          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval/60c0b549e9dad9aa14ca54c3/${this.$route.query.id}`
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval/${this.user_id}/${this.$route.query.id}`
         )
         .then((response) => {
           this.userVote = response.data.eval;
@@ -171,7 +277,7 @@ export default {
       this.userVote = value;
       axios.post(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval`, {
         movieId: this.movie._id,
-        userId: "60c0b549e9dad9aa14ca54c3",
+        userId: this.user_id,
         eval: this.userVote,
       });
       setTimeout(this.fetchMovie, 300);
@@ -183,6 +289,7 @@ export default {
 <style scoped>
 .detail {
   display: flex;
+  align-content: flex-start;
   margin: 50px;
 }
 
@@ -190,6 +297,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 30%;
+  margin: 30px;
   text-align: justify;
 }
 
@@ -221,5 +329,21 @@ export default {
 }
 .red {
   color: red;
+}
+.genres {
+  display: flex;
+  flex-direction: row;
+}
+.genre {
+  font-size: 1em;
+  border-radius: 10px;
+  background: rgb(172, 172, 172);
+  padding: 5px;
+  margin: 5px;
+  transition: 0.4s;
+}
+
+.genre:hover {
+  background: rgb(209, 209, 209);
 }
 </style>
