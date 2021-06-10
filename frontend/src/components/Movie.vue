@@ -28,7 +28,7 @@ export default {
   width: 250px;
   justify-content: space-evenly;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  transition: 0.1s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 .image-box:hover {
   transform: translateY(-7px);
