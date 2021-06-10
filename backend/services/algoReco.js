@@ -9,7 +9,13 @@ const { setupcoef } = require("./setupcoef");
 const N = 3;
 const NbRecoMovies = 8;
 
+/**
+ * vectorizes a movie bases on language, genre, and release date
+ * @param  {Number} id_movie id of the movie that is vectorized
+ * @return {[Number]} vector of length 27 of the movie's 27 characteristics
+ */
 const vectorizeMovie = async function(id_movie) {
+    // eslint-disable-next-line no-undef
     return new Promise(function(resolve, reject) {
         MovieModel.findById(id_movie)
     .then((movie) => {
@@ -58,9 +64,14 @@ const vectorizeMovie = async function(id_movie) {
 
 }
 
+/**
+ * standardizes coefficients so that some (like the date) do not have more weight than others.
+ * @return {[[Number], [Number]]} vector containing two elements: the vector of averages and the vector of deviation of the parameters
+ */
 const standardizationCoefficients = function () {
     console.log("Calcul des coef de standartization")
-    return new Promise(function (resolve, reject) {
+    // eslint-disable-next-line no-undef
+    return new Promise(function (resolve) {
 
         MovieModel.countDocuments({}, function(err, count){
             MovieModel.find({}).exec()
@@ -102,8 +113,12 @@ const standardizationCoefficients = function () {
 
 }
 
+/**
+ * gets the coefs of the movies that were calculated with functions in ./setupcoef.js
+ * @return {[Number]} vector of the movies' coefs
+ */
 const getCoefPreCalculate = async function () {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fs.readFile('dataInfos.json', 'utf8', function (err, jsonString) {
             if(err) {
                 setupcoef().then(async () => {
@@ -117,8 +132,13 @@ const getCoefPreCalculate = async function () {
 
 }
 
+/**
+ * standardizes a specific movie's coefficients so that some do not hold more weight than others
+ * @param  {Number} id_movie id of the movie that is vectorized
+ * @return {[Number]} vector of the movie's standardized coefficients
+ */
 const vectorizeMovieStandard = async function(id_movie) {
-    return new Promise(async (resolve, reject) =>{
+    return new Promise(async (resolve) =>{
         var vect = await vectorizeMovie(id_movie);
         const coefs = await getCoefPreCalculate();
 
@@ -132,6 +152,9 @@ const vectorizeMovieStandard = async function(id_movie) {
 
 }
 
+/**
+ * checks if two objects are the same
+ */
 const boolToBin = (value, variable) => {
     if (variable==value) {
         return 1;
@@ -140,6 +163,9 @@ const boolToBin = (value, variable) => {
     }
 }
 
+/**
+ * checks if an object is in an array
+ */
 const boolToBinArray = (value, array) => {
     if (array.includes(value)) {
         return 1;
@@ -148,10 +174,19 @@ const boolToBinArray = (value, array) => {
     }
 }
 
+/**
+ * calcultes the similarity between two vectors with cosinus similarity
+ * @return {Number} similarity
+ */
 const sim = (x, y) => {
     return (mathjs.dot(x,y)/(mathjs.norm(x, x.length)*mathjs.norm(y, y.length)));
 }
 
+/**
+ * finds the recommended movies for a user based on the recommendation algorithm
+ * @param {Number} userId id of the user for which recommended movies will be calculated
+ * @return {Promise} promise made of the list of the recommended movies
+ */
 const recoMovies = function(userId) {
     return new Promise((resolve, reject) => {
         UserModel.findById(userId)
@@ -199,6 +234,12 @@ const recoMovies = function(userId) {
 
 }
 
+/**
+ * finds the neighbors of a movie, to get the movies that are most similar to the given movie
+ * @param {[Number]} vectMovie vector of a movie's standardized coefficients
+ * @param {[neighbors]} neighbors vector of movies that the user evaluated, in which neighbors will be selected
+ * @return {Number} similarity
+ */
 const findNeighbors = (vectMovie, neighbors) => {
     return new Promise(async (resolve, reject) => {
         var simL = [];
@@ -223,6 +264,11 @@ const findNeighbors = (vectMovie, neighbors) => {
     })
 }
 
+/**
+ * gives all the movies that a user evaluated
+ * @param {Object} user
+ * @return {Promise} vector of movies and their evaluations
+ */
 const moviesNotedUser = (user) => {
     return new Promise((resolve, reject) => {
         EvalModel.find({user : user})
