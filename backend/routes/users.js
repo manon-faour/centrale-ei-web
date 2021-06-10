@@ -13,6 +13,19 @@ router.get("/", function (req, res) {
     });
 });
 
+router.get("/:email", function (req, res) {
+  if (req.params.email === "-1") {
+    res.status(201).json({ user: { _id: "-1" } });
+  }
+  UserModel.findOne({ email: req.params.email })
+    .then(function (user) {
+      res.status(201).json({ user: user });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
 router.get("/recommended/:id", function (req, res) {
   UserModel.find({ _id: req.params.id })
     .populate("recommendedMovies")
