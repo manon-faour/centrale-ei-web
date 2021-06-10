@@ -26,7 +26,12 @@
           {{ note }}
         </span>
       </p>
-
+      <button class="add" v-if="connected && !added" v-on:click="addMovie">
+        <div class="add-text">Ajouter à mes films</div>
+      </button>
+      <button class="remove" v-if="connected && added" v-on:click="removeMovie">
+        <div class="remove-text">Supprimer de mes films</div>
+      </button>
       <div v-if="connected" class="stars">
         <div
           class="star"
@@ -129,6 +134,7 @@ export default {
       loaded: false,
       user_id: -1,
       connected: false,
+      added: false,
       genres: [
         {
           id: 28,
@@ -292,6 +298,28 @@ export default {
       });
       setTimeout(this.fetchMovie, 300);
     },
+    addMovie: function () {
+      axios
+        .post(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies/${this.user_id}/${this.movie._id}`,
+          {}
+        )
+        .then((this.added = !this.added))
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    removeMovie: function () {
+      axios
+        .delete(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies/${this.user_id}/${this.movie._id}`,
+          {}
+        )
+        .then((this.added = !this.added))
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
@@ -299,7 +327,7 @@ export default {
 <style scoped>
 .detail {
   display: flex;
-  align-content: flex-start;
+  align-items: flex-start;
   margin: 50px;
 }
 
@@ -355,8 +383,31 @@ export default {
   margin: 5px;
   transition: 0.4s;
 }
-
 .genre:hover {
   background: rgb(209, 209, 209);
+}
+button {
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  font-size: 1.3em;
+  padding: 10px;
+  border: none;
+  margin-bottom: 20px;
+}
+.add {
+  background: #48acf0;
+}
+.add:hover {
+  background: #70bef3;
+}
+.remove {
+  background: rgb(187, 187, 187);
+}
+.remove:hover {
+  background: rgb(221, 221, 221);
 }
 </style>
