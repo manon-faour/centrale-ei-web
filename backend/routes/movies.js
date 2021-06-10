@@ -11,10 +11,10 @@ router.get("/", function (req, res) {
   });
 });
 
-router.get("/top", function (req, res) {
+router.get("/top/:nb", function (req, res) {
   MovieModel.find({})
     .sort({ average_rating: -1 })
-    .limit(req.body.limit)
+    .limit(parseInt(req.params.nb))
     .then(function (movies) {
       res.status(201).json({ movies: movies });
     });
