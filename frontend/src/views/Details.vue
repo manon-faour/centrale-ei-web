@@ -23,8 +23,7 @@
       <p class="description">{{ movie.description }}</p>
       <p class="rating">
         <span :class="color">
-          {{ loaded ? movie.average_rating.$numberDecimal : "Chargement..." }}
-          / 5
+          {{ note }}
         </span>
       </p>
 
@@ -212,8 +211,8 @@ export default {
   },
   computed: {
     color: function () {
-      if (!this.loaded) {
-        return "";
+      if (!this.loaded || this.movie.average_rating.$numberDecimal < 1) {
+        return "text";
       }
       if (this.movie.average_rating.$numberDecimal < 2) {
         return "red";
@@ -236,6 +235,17 @@ export default {
         month: "long",
         day: "numeric",
       });
+    },
+    note: function () {
+      if (this.loaded) {
+        const noteRound =
+          Math.round(this.movie.average_rating.$numberDecimal * 10) / 10;
+        if (noteRound === 0) {
+          return "Pas de note pour ce film";
+        }
+        return noteRound + " / 5";
+      }
+      return "Chargement...";
     },
   },
   watch: {
@@ -329,6 +339,9 @@ export default {
 }
 .red {
   color: red;
+}
+.text {
+  font-size: 0.6em;
 }
 .genres {
   display: flex;
