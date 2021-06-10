@@ -59,6 +59,7 @@ router.get("/genre/:id", function (req, res) {
  */
 router.get("/search/:query", function (req, res) {
   MovieModel.find({ title: { $regex: req.params.query, $options: "i" } })
+    .sort({ average_rating: -1 })
     .then(function (movies) {
       res.status(201).json({ movies: movies });
     })
