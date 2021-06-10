@@ -30,6 +30,16 @@ router.get("/:id", function (req, res) {
     });
 });
 
+router.get("/search/:query", function (req, res) {
+  MovieModel.find({ title: { $regex: req.params.query, $options: "i" } })
+    .then(function (movies) {
+      res.status(201).json({ movies: movies });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
 router.post("/new", function (req, res) {
   const newMovie = new MovieModel({
     title: req.body.title,
