@@ -12,7 +12,9 @@
         <input v-model="user_email" id="email" />
       </div>
       <button @click="connect">Connexion</button>
-      <router-link to="/Signin" tag="button">Ou bien inscris toi</router-link>
+      <router-link to="/Signin" tag="button">
+        <button>Inscription</button>
+      </router-link>
     </div>
 
     <div v-if="user_id !== -1" class="perso">
@@ -190,16 +192,5 @@ h2 {
   margin: 0px 10px;
   width: 250px;
   font-size: 0.8em;
-}
-button {
-  width: 200px;
-  font-size: 1.4em;
-  margin: 30px;
-  border-radius: 20px;
-  background: #48acf0;
-  border: none;
-}
-button:hover {
-  background: #70bef3;
 }
 </style>

@@ -6,3 +6,16 @@ body {
   padding: 0px;
   margin: 0px;
 }
+
+button {
+  width: 200px;
+  font-size: 1.4em;
+  margin-top: 20px;
+  border-radius: 20px;
+  background: #48acf0;
+  border: none;
+  align-self: center;
+}
+button:hover {
+  background: #70bef3;
+}

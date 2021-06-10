@@ -387,16 +387,9 @@ export default {
   background: rgb(209, 209, 209);
 }
 button {
-  display: flex;
-  flex-direction: row;
   width: 250px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 30px;
-  font-size: 1.3em;
   padding: 10px;
-  border: none;
-  margin-bottom: 20px;
+  margin: 20px;
 }
 .add {
   background: #48acf0;

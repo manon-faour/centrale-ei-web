@@ -1,5 +1,6 @@
 <template>
   <div class="signin">
+    <h2>Inscription</h2>
     <form>
       <label>Mail</label>
       <input v-model="email" type="text" />
@@ -45,4 +46,31 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.signin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h2 {
+  text-align: left;
+  font-size: 2.3em;
+  margin-top: 100px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: 50px;
+}
+input {
+  margin: 10px;
+  margin-bottom: 20px;
+}
+label {
+  font-size: 1.3em;
+}
+button {
+  align-self: center;
+}
+</style>
