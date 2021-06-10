@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     search: function () {
-      this.$router.replace({
+      this.$router.push({
         name: "Results",
         query: { search: this.searchText },
       });

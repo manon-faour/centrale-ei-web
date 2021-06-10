@@ -31,22 +31,25 @@ export default {
       searchQuery: this.$route.query.search,
     };
   },
+  watch: {
+    $route() {
+      this.$router.go();
+    },
+  },
   methods: {
     fetchResults: function () {
-      console.log(this.$route.query.search),
-        axios
-          .get(
-            `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/search/${this.$route.query.search}`
-          )
-          .then((response) => {
-            // Do something if call succeeded
-            this.movies = response.data.movies;
-            console.log(this.movies);
-          })
-          .catch((error) => {
-            // Do something if call failed
-            console.log(error);
-          });
+      axios
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/search/${this.searchQuery}`
+        )
+        .then((response) => {
+          // Do something if call succeeded
+          this.movies = response.data.movies;
+        })
+        .catch((error) => {
+          // Do something if call failed
+          console.log(error);
+        });
     },
   },
 };
