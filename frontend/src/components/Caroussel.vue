@@ -51,7 +51,7 @@ export default {
   data: function () {
     return {
       currentTab: 1,
-      moviesToDisplay: 5,
+      moviesToDisplay: 4,
       animation: "",
       animated: false,
     };
@@ -156,7 +156,7 @@ export default {
 }
 
 .movie-container {
-  width: 1500px;
+  width: 1150px;
   padding: 10px 0px;
   overflow: hidden;
 }
@@ -165,21 +165,21 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  transform: translateX(-1500px);
+  transform: translateX(-1150px);
 }
 
 .displayed-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 1500px;
+  min-width: 1150px;
 }
 
 .hidden-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 1500px;
+  min-width: 1150px;
 }
 
 @keyframes next {

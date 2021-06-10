@@ -18,7 +18,8 @@ import axios from "axios";
 export default {
   name: "Home",
   created() {
-    this.fetchTop100();
+    this.fetchTop10();
+    this.fetchMyMovies();
   },
   data: function () {
     return {
