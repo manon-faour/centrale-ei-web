@@ -1,6 +1,12 @@
 const axios = require("axios");
 const MovieModel = require("../models/movie");
 
+/**
+ * uses TMDB to populate the db with movies.
+ * @param  {Number} pageMax maximum page that will be called
+ * @param  {Number} page the page of TMDB which we call
+ * @return {undefined}
+ */
 const populateDB = function (pageMax, page) {
   if (page <= pageMax) {
     const fetchPage = function (page, resolve) {
@@ -32,7 +38,7 @@ const populateDB = function (pageMax, page) {
                 if (error.code != 11000) {
                   console.log(error);
                 } else {
-                  console.log("Déja là: ", movie.title);
+                  console.log(error.message + " Déja là: ", movie.title);
                 }
               });
           });
@@ -45,7 +51,7 @@ const populateDB = function (pageMax, page) {
       fetchPage(page, resolve);
     }).then((page) => {
       const newPage = page + 1;
-      populateDB(pageMax, newPage);
+      populateDB(pageMax, newPage); // recursively find new movies
     });
   }
 };
