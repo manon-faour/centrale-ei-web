@@ -1,6 +1,6 @@
 <template>
   <div class="results">
-    <h2>Résultats de la recherche</h2>
+    <h2>Résultats de la recherche "{{ searchQuery }}"</h2>
     <div class="movie-results-container">
       <p v-if="!movies.length">Il n'y pas de film de ce nom</p>
       <Movie
