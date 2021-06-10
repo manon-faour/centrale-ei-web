@@ -1,5 +1,6 @@
 const express = require("express");
 const UserModel = require("../models/user");
+const EvalModel = require("../models/eval");
 const router = express.Router();
 
 router.get("/", function (req, res) {
@@ -47,12 +48,14 @@ router.post("/new", function (req, res) {
     });
 });
 
-router.delete("/", function (req, res) {
-  UserModel.findById(req.body.id)
+router.delete("/:id", function (req, res) {
+  UserModel.findById(req.params.id)
     .then(function (user) {
-      console.log(user);
-      user.delete();
-      res.status(201).end();
+      EvalModel.deleteMany({ user: req.params.id }).then(function () {
+        console.log(user);
+        user.delete();
+        res.status(201).end();
+      });
     })
     .catch(function (err) {
       res.status(500).json({ message: err.message });
