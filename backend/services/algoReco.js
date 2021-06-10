@@ -176,7 +176,9 @@ const recoMovies = function(userId) {
                     sumAbs += Math.abs(neighbors[i].sim);
                     sumCoef += neighbors[i].sim*notesUser[neighbors[i].neighbor];
                 }
-                notesPredict.push({"id_movie": movie.id, "note": sumCoef/sumAbs})
+                if(sumAbs != 0){
+                    notesPredict.push({"id_movie": movie.id, "note": sumCoef/sumAbs})
+                }
             }
         }
 
