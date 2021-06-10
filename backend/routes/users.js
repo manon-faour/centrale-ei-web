@@ -3,6 +3,9 @@ const UserModel = require("../models/user");
 const EvalModel = require("../models/eval");
 const router = express.Router();
 
+/**
+ * returns all users
+ */
 router.get("/", function (req, res) {
   UserModel.find({})
     .then(function (users) {
@@ -13,6 +16,9 @@ router.get("/", function (req, res) {
     });
 });
 
+/**
+ * returns a specific user based on their email address
+ */
 router.get("/:email", function (req, res) {
   if (req.params.email === "-1") {
     res.status(201).json({ user: { _id: "-1" } });
@@ -26,6 +32,9 @@ router.get("/:email", function (req, res) {
     });
 });
 
+/**
+ * gets all recommended movies of a user
+ */
 router.get("/recommended/:id", function (req, res) {
   UserModel.find({ _id: req.params.id })
     .populate("recommendedMovies")
@@ -37,6 +46,9 @@ router.get("/recommended/:id", function (req, res) {
     });
 });
 
+/**
+ * creates a new user
+ */
 router.post("/new", function (req, res) {
   const newUser = new UserModel({
     email: req.body.email,
@@ -61,6 +73,9 @@ router.post("/new", function (req, res) {
     });
 });
 
+/**
+ * deletes a user and all of the evaluations that they gave
+ */
 router.delete("/:id", function (req, res) {
   UserModel.findById(req.params.id)
     .then(function (user) {

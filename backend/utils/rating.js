@@ -1,6 +1,11 @@
 const MovieModel = require("../models/movie");
 const EvalModel = require("../models/eval");
 
+/**
+ * Calculates the average evalutation of a movie
+ * @param  {String} movieId id of movie
+ * @return {undefined}
+ */
 const average = async function (movieId) {
   const evals = await EvalModel.find({ movie: movieId });
   let note = 0;
