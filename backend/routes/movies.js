@@ -20,6 +20,16 @@ router.get("/top/:nb", function (req, res) {
     });
 });
 
+router.get("/movie/:id", function (req, res) {
+  MovieModel.find({ _id: req.params.id })
+    .then(function (movie) {
+      res.status(201).json({ movie: movie });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
 router.post("/new", function (req, res) {
   const newMovie = new MovieModel({
     title: req.body.title,
@@ -35,8 +45,8 @@ router.post("/new", function (req, res) {
     .then(function (newDocument) {
       res.status(201).json(newDocument);
     })
-    .catch(function (error) {
-      res.status(500).json({ message: error });
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
     });
 });
 
@@ -51,8 +61,8 @@ router.post("/eval", function (req, res) {
       res.status(201).json(newDocument);
       return true;
     })
-    .catch(function (error) {
-      res.status(500).json({ message: error });
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
     });
 });
 
@@ -84,7 +94,7 @@ router.post("/mymovies", async function (req, res) {
     user.save();
     res.status(201).json({ message: "all good" });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -95,7 +105,7 @@ router.get("/mymovies", async function (req, res) {
     console.log(user);
     res.status(201).json({ movies: user.myMovies });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -109,7 +119,7 @@ router.delete("/mymovies", function (req, res) {
       res.status(201).end();
     })
     .catch(function (err) {
-      res.status(500).json({ message: err });
+      res.status(500).json({ message: err.message });
     });
 });
 
