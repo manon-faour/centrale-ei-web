@@ -2,8 +2,8 @@ const express = require("express");
 const MovieModel = require("../models/movie");
 const UserModel = require("../models/user");
 const router = express.Router();
-const evals = require("../utils/evals");
-const rating = require("../utils/rating");
+const evals = require("../services/evals");
+const rating = require("../services/rating");
 const { recoMovies } = require("../services/algoReco");
 const { updateCoefs } = require("../services/setupcoef");
 
