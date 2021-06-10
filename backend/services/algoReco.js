@@ -224,7 +224,7 @@ const recoMovies = function(userId) {
 
         var recoMovies = [];
         for (var i = 0; i < Math.min(NbRecoMovies, notesPredict.length); i++) {
-            recoMovies.push(notesPredict[i].id_movie);
+            recoMovies.push(notesPredict[notesPredict.length-1-i].id_movie);
         }
         resolve(recoMovies);
     })
@@ -286,7 +286,8 @@ const moviesNotedUser = (user) => {
 
 }
 
-exports.vectorizeMovie = vectorizeMovie;
+exports.sim = sim;
+exports.vectorizeMovieStandard = vectorizeMovieStandard;
 exports.recoMovies = recoMovies;
 exports.standardizationCoefficients = standardizationCoefficients;
 exports.getCoefPreCalculate = getCoefPreCalculate;
