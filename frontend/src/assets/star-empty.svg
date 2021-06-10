@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="7.1524792mm"
+   height="6.8253512mm"
+   viewBox="0 0 7.1524792 6.8253512"
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (c4e8f9ed74, 2021-05-24)"
@@ -26,8 +26,8 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="10.592223"
-     inkscape:cx="286.76701"
-     inkscape:cy="360.40595"
+     inkscape:cx="16.663169"
+     inkscape:cy="8.6384133"
      inkscape:window-width="1920"
      inkscape:window-height="1010"
      inkscape:window-x="0"
@@ -39,25 +39,26 @@
     <marker
        style="overflow:visible"
        id="Arrow1Lstart"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Lstart"
        inkscape:isstock="true">
       <path
-         transform="scale(0.8) translate(12.5,0)"
-         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path2872" />
     </marker>
   </defs>
   <g
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-71.464763,-93.060669)">
     <path
        sodipodi:type="star"
-       style="fill:none;stroke:#000000;stroke-width:1.37953;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:0.02353265"
+       style="fill:none;fill-opacity:0.0235326;stroke:#000000;stroke-width:1.37953;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path5186"
        inkscape:flatsided="false"
        sodipodi:sides="5"

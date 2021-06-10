@@ -137,9 +137,6 @@ export default {
       setTimeout(this.animationNextStop, 1000);
     },
   },
-  updated: function () {
-    console.log(this.nextMovies);
-  },
 };
 </script>
 

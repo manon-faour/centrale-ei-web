@@ -7,45 +7,87 @@
     />
     <div class="infos">
       <h2>{{ movie.title }}</h2>
-      <p>Sorti le {{ movie.release_date }}</p>
-      <p>{{ movie.description }}</p>
-      <p>
-        Note moyenne:
-        {{ loaded ? movie.average_rating.$numberDecimal : "Chargement..." }}
+      <p class="date">Sorti le {{ movie.release_date }}</p>
+      <p class="description">{{ movie.description }}</p>
+      <p class="rating">
+        <span :class="color">
+          {{ loaded ? movie.average_rating.$numberDecimal : "Chargement..." }}
+          / 5
+        </span>
       </p>
 
       <div class="stars">
-        <div class="star" v-on:click="onVote(1)">
-          <img v-bind:src="'../assets/doge.svg'" alt="" />
-        </div>
-        <div class="star" v-on:click="onVote(2)">
+        <div
+          class="star"
+          v-on:click="onVote(1)"
+          @mouseover="displayedVote = 1"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            v-bind:src="
-              '../assets/star-' + (vote >= 2 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 1 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
         </div>
-        <div class="star" v-on:click="onVote(3)">
+        <div
+          class="star"
+          v-on:click="onVote(2)"
+          @mouseover="displayedVote = 2"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            src="
-              '../assets/star-' + (vote >= 3 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 2 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
         </div>
-        <div class="star" v-on:click="onVote(4)">
+        <div
+          class="star"
+          v-on:click="onVote(3)"
+          @mouseover="displayedVote = 3"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            v-bind:src="
-              '../assets/star-' + (vote >= 4 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 3 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
         </div>
-        <div class="star" v-on:click="onVote(5)">
+        <div
+          class="star"
+          v-on:click="onVote(4)"
+          @mouseover="displayedVote = 4"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            v-bind:src="
-              '../assets/star-' + (vote >= 5 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 4 ? 'fill' : 'empty') +
+                '.svg')
+            "
+            alt=""
+          />
+        </div>
+        <div
+          class="star"
+          v-on:click="onVote(5)"
+          @mouseover="displayedVote = 5"
+          @mouseleave="displayedVote = userVote"
+        >
+          <img
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 5 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
@@ -62,13 +104,39 @@ export default {
   name: "Home",
   created() {
     this.fetchMovie();
+    this.fetchUserVote();
   },
   data: function () {
     return {
-      vote: 0,
+      userVote: 0,
+      displayedVote: 0,
       movie: {},
       loaded: false,
     };
+  },
+  computed: {
+    color: function () {
+      if (!this.loaded) {
+        return "";
+      }
+      if (this.movie.average_rating.$numberDecimal < 1) {
+        return "red";
+      }
+      if (this.movie.average_rating.$numberDecimal < 2.5) {
+        return "orange";
+      }
+      if (this.movie.average_rating.$numberDecimal < 4) {
+        return "yellow";
+      }
+
+      return "green";
+    },
+  },
+  watch: {
+    userVote: function (newVote) {
+      this.displayedVote = newVote;
+      console.log(this.newVote);
+    },
   },
   methods: {
     fetchMovie: function () {
@@ -85,8 +153,28 @@ export default {
           console.log(error);
         });
     },
+    fetchUserVote: function () {
+      axios
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval/60c0b549e9dad9aa14ca54c3/${this.$route.query.id}`
+        )
+        .then((response) => {
+          this.userVote = response.data.eval;
+          this.displayedVote = response.data.eval;
+          console.log(this.userVote);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     onVote: function (value) {
-      this.vote = value;
+      this.userVote = value;
+      axios.post(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval`, {
+        movieId: this.movie._id,
+        userId: "60c0b549e9dad9aa14ca54c3",
+        eval: this.userVote,
+      });
+      setTimeout(this.fetchMovie, 300);
     },
   },
 };
@@ -108,5 +196,30 @@ export default {
 .poster {
   border-radius: 10px;
   margin: 50px;
+}
+.star > img {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+.stars {
+  display: flex;
+  flex-direction: row;
+}
+.rating {
+  font-size: 2.3em;
+  font-weight: bold;
+}
+.green {
+  color: green;
+}
+.orange {
+  color: orange;
+}
+.yellow {
+  color: rgb(224, 191, 0);
+}
+.red {
+  color: red;
 }
 </style>
