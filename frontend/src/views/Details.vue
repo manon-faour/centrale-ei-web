@@ -20,7 +20,7 @@
         </span>
       </p>
 
-      <div class="stars">
+      <div v-if="connected" class="stars">
         <div
           class="star"
           v-on:click="onVote(1)"
@@ -108,7 +108,11 @@ export default {
   name: "Home",
   created() {
     this.fetchMovie();
-    this.fetchUserVote();
+    if (localStorage.user_id) {
+      this.user_id = localStorage.user_id;
+      this.connected = true;
+      this.fetchUserVote();
+    }
   },
   data: function () {
     return {
@@ -116,6 +120,8 @@ export default {
       displayedVote: 0,
       movie: {},
       loaded: false,
+      user_id: -1,
+      connected: false,
     };
   },
   computed: {
@@ -170,7 +176,7 @@ export default {
     fetchUserVote: function () {
       axios
         .get(
-          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval/60c0b549e9dad9aa14ca54c3/${this.$route.query.id}`
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval/${this.user_id}/${this.$route.query.id}`
         )
         .then((response) => {
           this.userVote = response.data.eval;
@@ -185,7 +191,7 @@ export default {
       this.userVote = value;
       axios.post(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval`, {
         movieId: this.movie._id,
-        userId: "60c0b549e9dad9aa14ca54c3",
+        userId: this.user_id,
         eval: this.userVote,
       });
       setTimeout(this.fetchMovie, 300);
