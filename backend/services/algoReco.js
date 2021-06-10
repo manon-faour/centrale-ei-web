@@ -278,7 +278,7 @@ const moviesNotedUser = (user) => {
             var notes = {};
             evals.forEach((eval) => {
                 moviesId.push(String(eval.movie));
-                notes[eval.movie] = eval.eval;
+                notes[eval.movie] = eval.eval - 2.5;
             })
             resolve([moviesId, notes]);
         })

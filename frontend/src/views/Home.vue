@@ -12,7 +12,7 @@
         <input v-model="user_email" id="email" />
       </div>
       <button @click="connect">Connexion</button>
-      <router-link to="/f00" tag="button">Ou bien inscris toi</router-link>
+      <router-link to="/Signin" tag="button">Ou bien inscris toi</router-link>
     </div>
 
     <div v-if="user_id !== -1" class="perso">
