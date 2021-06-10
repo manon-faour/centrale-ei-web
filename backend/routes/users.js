@@ -3,9 +3,13 @@ const UserModel = require("../models/user");
 const router = express.Router();
 
 router.get("/", function (req, res) {
-  UserModel.find({}).then(function (users) {
-    res.json({ users: users });
-  });
+  UserModel.find({})
+    .then(function (users) {
+      res.status(201).json({ users: users });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
 });
 
 router.post("/new", function (req, res) {
@@ -21,13 +25,13 @@ router.post("/new", function (req, res) {
     .then(function (newDocument) {
       res.status(201).json(newDocument);
     })
-    .catch(function (error) {
-      if (error.code === 11000) {
+    .catch(function (err) {
+      if (err.code === 11000) {
         res.status(400).json({
           message: `User with email "${newUser.email}" already exists`,
         });
       } else {
-        res.status(500).json({ message: "Error while creating the user" });
+        res.status(500).json({ message: err.message });
       }
     });
 });
@@ -39,8 +43,8 @@ router.delete("/", function (req, res) {
       user.delete();
       res.status(201).end();
     })
-    .catch(function (error) {
-      res.status(500).json({ message: error });
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
     });
 });
 
