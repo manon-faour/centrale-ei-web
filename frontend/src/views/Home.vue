@@ -5,10 +5,12 @@
     <h2>Top 10</h2>
     <Caroussel :movies="top10" />
 
-    <div v-if="user_id === -1" class="co">
+    <div v-if="user_id === -1" class="login">
       <h3>Connecte-toi pour avoir accès à plus de fonctionnalités</h3>
-      <label>Email:</label>
-      <input v-model="user_email" />
+      <div class="input-field">
+        <label for="email">Entrez votre email </label>
+        <input v-model="user_email" id="email" />
+      </div>
       <button @click="connect">Connexion</button>
     </div>
 
@@ -167,5 +169,35 @@ h2 {
   margin-left: 10%;
   font-size: 2.3em;
   margin-top: 100px;
+}
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login > h3 {
+  font-size: 2.3em;
+}
+.input-field {
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+.input-field > input {
+  margin: 0px 10px;
+  width: 250px;
+  font-size: 0.8em;
+}
+button {
+  width: 250px;
+  font-size: 1.3em;
+  margin: 20px;
+  background: #becfda;
+  border: none;
+}
+button:hover {
+  background: #d4e7f3;
 }
 </style>
