@@ -13,22 +13,44 @@
         placeholder="Rechercher..."
       />
     </div>
+    <p>{{ user_name }}</p>
   </nav>
   <router-view />
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "navbar",
   data: function () {
     return {
       searchText: "",
+      user_name: "",
+      connected: false,
     };
   },
   methods: {
     search: function () {
       console.log(this.searchText);
     },
+  },
+  created() {
+    if (localStorage.user_id) {
+      axios
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/users/` +
+            String(localStorage.user_id)
+        )
+        .then((response) => {
+          this.user_name = response.data.user.firstName;
+          this.fetchMyMovies(this.user_id);
+          this.fetchReco(this.user_id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
 };
 </script>

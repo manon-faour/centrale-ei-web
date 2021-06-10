@@ -4,10 +4,28 @@
     <h1>DogeMovies</h1>
     <h2>Top 10</h2>
     <Caroussel :movies="top10" />
-    <!--     <h2>Pour vous</h2>
-    <Caroussel :movies="" /> -->
-    <h2>Mes Films</h2>
-    <Caroussel :movies="myMovies" />
+
+    <div v-if="user_id === -1" class="co">
+      <h3>Connecte-toi pour avoir accès à plus de fonctionnalités</h3>
+      <label>Email:</label>
+      <input v-model="user_email" />
+      <button @click="connect">Connexion</button>
+    </div>
+
+    <div v-if="user_id !== -1" class="perso">
+      <h2>Pour vous</h2>
+      <Caroussel
+        v-if="recommendedMovies.length > 0"
+        :movies="recommendedMovies"
+      />
+      <p v-if="recommendedMovies.length == 0">
+        Note quelques films pour qu'on puisse trouver des films qui te
+        correspondent
+      </p>
+      <h2>Mes Films</h2>
+      <Caroussel v-if="myMovies.length > 0" :movies="myMovies" />
+      <p v-if="myMovies.length == 0">Aucun film dans ta liste..</p>
+    </div>
   </div>
 </template>
 
@@ -18,14 +36,20 @@ import axios from "axios";
 export default {
   name: "Home",
   created() {
+    if (localStorage.user_id) {
+      this.user_id = localStorage.user_id;
+    }
     this.fetchTop10();
-    this.fetchMyMovies();
+    this.fetchMyMovies(this.user_id);
+    this.fetchReco(this.user_id);
   },
   data: function () {
     return {
       top10: [],
       recommendedMovies: [],
       myMovies: [],
+      user_id: -1,
+      user_email: "",
     };
   },
   components: {
@@ -42,15 +66,57 @@ export default {
           console.log(error);
         });
     },
-    fetchMyMovies: function () {
+    fetchMyMovies: function (user_id) {
+      if (user_id !== -1) {
+        axios
+          .get(
+            `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies/` +
+              String(user_id)
+          )
+          .then((response) => {
+            console.log("fetchMyMovies:", response.data.movies);
+            this.myMovies = response.data.movies;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    fetchReco: function (user_id) {
+      console.log("try to fetch reco", user_id);
+      if (user_id !== -1) {
+        axios
+          .get(
+            `${process.env.VUE_APP_BACKEND_BASE_URL}/users/recommended/` +
+              String(user_id)
+          )
+          .then((response) => {
+            console.log("fetchReco:", response.data.movies);
+            this.recommendedMovies = response.data.movies;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    getId: function (user_mail) {
       axios
-        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/mymovies`)
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/users/email/` +
+            String(user_mail)
+        )
         .then((response) => {
-          this.myMovies = response.data.movies;
+          this.user_id = response.data.user._id;
+          localStorage.user_id = response.data.user._id;
+          this.fetchMyMovies(this.user_id);
+          this.fetchReco(this.user_id);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    connect: function () {
+      this.getId(this.user_email);
     },
   },
 };
