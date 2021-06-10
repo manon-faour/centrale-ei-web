@@ -15,37 +15,77 @@
       </p>
 
       <div class="stars">
-        <div class="star" v-on:click="onVote(1)">
-          <img v-bind:src="'../assets/doge.svg'" alt="" />
-        </div>
-        <div class="star" v-on:click="onVote(2)">
+        <div
+          class="star"
+          v-on:click="onVote(1)"
+          @mouseover="displayedVote = 1"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            v-bind:src="
-              '../assets/star-' + (vote >= 2 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 1 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
         </div>
-        <div class="star" v-on:click="onVote(3)">
+        <div
+          class="star"
+          v-on:click="onVote(2)"
+          @mouseover="displayedVote = 2"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            src="
-              '../assets/star-' + (vote >= 3 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 2 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
         </div>
-        <div class="star" v-on:click="onVote(4)">
+        <div
+          class="star"
+          v-on:click="onVote(3)"
+          @mouseover="displayedVote = 3"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            v-bind:src="
-              '../assets/star-' + (vote >= 4 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 3 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
         </div>
-        <div class="star" v-on:click="onVote(5)">
+        <div
+          class="star"
+          v-on:click="onVote(4)"
+          @mouseover="displayedVote = 4"
+          @mouseleave="displayedVote = userVote"
+        >
           <img
-            v-bind:src="
-              '../assets/star-' + (vote >= 5 ? 'fill' : 'empty') + '.svg'
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 4 ? 'fill' : 'empty') +
+                '.svg')
+            "
+            alt=""
+          />
+        </div>
+        <div
+          class="star"
+          v-on:click="onVote(5)"
+          @mouseover="displayedVote = 5"
+          @mouseleave="displayedVote = userVote"
+        >
+          <img
+            :src="
+              require('../assets/star-' +
+                (displayedVote >= 5 ? 'fill' : 'empty') +
+                '.svg')
             "
             alt=""
           />
@@ -62,13 +102,21 @@ export default {
   name: "Home",
   created() {
     this.fetchMovie();
+    this.fetchUserVote();
   },
   data: function () {
     return {
-      vote: 0,
+      userVote: 0,
+      displayedVote: 0,
       movie: {},
       loaded: false,
     };
+  },
+  watch: {
+    userVote: function (newVote) {
+      this.displayedVote = newVote;
+      console.log(this.newVote);
+    },
   },
   methods: {
     fetchMovie: function () {
@@ -85,8 +133,22 @@ export default {
           console.log(error);
         });
     },
+    fetchUserVote: function () {
+      axios
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/eval/60c0b549e9dad9aa14ca54c3/${this.$route.query.id}`
+        )
+        .then((response) => {
+          this.userVote = response.data.eval;
+          this.displayedVote = response.data.eval;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     onVote: function (value) {
-      this.vote = value;
+      this.userVote = value;
+      console.log(this.vote);
     },
   },
 };
@@ -108,5 +170,14 @@ export default {
 .poster {
   border-radius: 10px;
   margin: 50px;
+}
+img {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+.stars {
+  display: flex;
+  flex-direction: row;
 }
 </style>
