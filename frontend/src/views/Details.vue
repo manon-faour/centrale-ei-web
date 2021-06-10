@@ -7,7 +7,11 @@
     />
     <div class="infos">
       <h2>{{ movie.title }}</h2>
-      <p class="date">Sorti le {{ movie.release_date }}</p>
+      <div class="genres"></div>
+      <p class="date">
+        Sorti le
+        {{ date }}
+      </p>
       <p class="description">{{ movie.description }}</p>
       <p class="rating">
         <span :class="color">
@@ -119,10 +123,10 @@ export default {
       if (!this.loaded) {
         return "";
       }
-      if (this.movie.average_rating.$numberDecimal < 1) {
+      if (this.movie.average_rating.$numberDecimal < 2) {
         return "red";
       }
-      if (this.movie.average_rating.$numberDecimal < 2.5) {
+      if (this.movie.average_rating.$numberDecimal < 3) {
         return "orange";
       }
       if (this.movie.average_rating.$numberDecimal < 4) {
@@ -130,6 +134,16 @@ export default {
       }
 
       return "green";
+    },
+    date: function () {
+      if (!this.loaded) {
+        return "";
+      }
+      return new Date(this.movie.release_date).toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
     },
   },
   watch: {
@@ -183,6 +197,7 @@ export default {
 <style scoped>
 .detail {
   display: flex;
+  align-content: flex-start;
   margin: 50px;
 }
 
@@ -190,6 +205,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 30%;
+  margin: 30px;
   text-align: justify;
 }
 
