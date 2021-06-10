@@ -19,11 +19,24 @@ router.get("/", function (req, res) {
 /**
  * returns a specific user based on their email address
  */
-router.get("/:email", function (req, res) {
+router.get("/email/:email", function (req, res) {
   if (req.params.email === "-1") {
     res.status(201).json({ user: { _id: "-1" } });
   }
   UserModel.findOne({ email: req.params.email })
+    .then(function (user) {
+      res.status(201).json({ user: user });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
+/**
+ * returns a specific user based on their id
+ */
+router.get("/:id", function (req, res) {
+  UserModel.findOne({ _id: req.params.id })
     .then(function (user) {
       res.status(201).json({ user: user });
     })
