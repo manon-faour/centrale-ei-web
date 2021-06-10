@@ -3,11 +3,21 @@ const MovieModel = require("../models/movie");
 const UserModel = require("../models/user");
 const router = express.Router();
 const evals = require("../utils/evals");
+const rating = require("../utils/rating");
 
 router.get("/", function (req, res) {
   MovieModel.find({}).then(function (movies) {
     res.json({ movies: movies });
   });
+});
+
+router.get("/top", function (req, res) {
+  MovieModel.find({})
+    .sort({ average_rating: -1 })
+    .limit(req.body.limit)
+    .then(function (movies) {
+      res.status(201).json({ movies: movies });
+    });
 });
 
 router.post("/new", function (req, res) {
@@ -37,6 +47,7 @@ router.post("/eval", function (req, res) {
   evals
     .eval(userId, movieId, evaluation)
     .then(function (newDocument) {
+      rating.average(movieId);
       res.status(201).json(newDocument);
       return true;
     })
