@@ -28,7 +28,7 @@
         </div>
         <div class="star" v-on:click="onVote(3)">
           <img
-            v-bind:src="
+            src="
               '../assets/star-' + (vote >= 3 ? 'fill' : 'empty') + '.svg'
             "
             alt=""
