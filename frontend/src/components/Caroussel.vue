@@ -11,7 +11,7 @@
         <div class="hidden-movies">
           <Movie
             v-for="movie in previousMovies"
-            :key="movie.title"
+            :key="movie._id"
             :movie="movie"
             class="movie"
           />
@@ -19,7 +19,7 @@
         <div class="displayed-movies">
           <Movie
             v-for="movie in displayedMovies"
-            :key="movie.title"
+            :key="movie._id"
             :movie="movie"
             class="movie"
           />
@@ -27,7 +27,7 @@
         <div class="hidden-movies">
           <Movie
             v-for="movie in nextMovies"
-            :key="movie.title"
+            :key="movie._id"
             :movie="movie"
             class="movie"
           />
@@ -156,7 +156,7 @@ export default {
 }
 
 .movie-container {
-  width: 1150px;
+  width: 1200px;
   padding: 10px 0px;
   overflow: hidden;
 }
@@ -165,21 +165,21 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  transform: translateX(-1150px);
+  transform: translateX(-1200px);
 }
 
 .displayed-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 1150px;
+  min-width: 1200px;
 }
 
 .hidden-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 1150px;
+  min-width: 1200px;
 }
 
 @keyframes next {

@@ -1,10 +1,12 @@
 <template>
-  <div class="image-box">
-    <img v-bind:src="movie.poster_path" :alt="movie.title" />
-    <div class="title">
-      {{ movie.title }}
+  <router-link :to="{ name: 'Details', query: { id: movie._id } }">
+    <div class="image-box">
+      <img v-bind:src="movie.poster_path" :alt="movie.title" />
+      <div class="title">
+        {{ movie.title }}
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -37,5 +39,10 @@ img {
 }
 .title {
   margin: 20px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }
 </style>
