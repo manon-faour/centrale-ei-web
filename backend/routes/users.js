@@ -36,9 +36,10 @@ router.get("/:email", function (req, res) {
  * gets all recommended movies of a user
  */
 router.get("/recommended/:id", function (req, res) {
-  UserModel.find({ _id: req.params.id })
+  UserModel.findOne({ _id: req.params.id })
     .populate("recommendedMovies")
     .then(function (user) {
+      console.log(user);
       res.status(201).json({ movies: user.recommendedMovies });
     })
     .catch(function (err) {
