@@ -8,12 +8,15 @@ const usersRouter = require("./routes/users");
 const moviesRouter = require("./routes/movies");
 const routeNotFoundJsonHandler = require("./services/routeNotFoundJsonHandler");
 const { populateDB } = require("./services/populateDB");
-const { vectorizeMovie, recoMovies, getCoefPreCalculate } = require("./services/algoReco");
-const {   setupcoef } = require("./services/setupcoef");
+const {
+  vectorizeMovie,
+  recoMovies,
+  getCoefPreCalculate,
+} = require("./services/algoReco");
+const { setupcoef } = require("./services/setupcoef");
 
 const SETUPCOEF = false;
 const POPULATE = false;
-
 
 mongoose.connect(process.env.MONGO_DB_URL, {
   useNewUrlParser: true,
@@ -29,9 +32,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(jsonErrorHandler);
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/movies", moviesRouter);
+app.use("/api/", indexRouter);
+app.use("/users/api", usersRouter);
+app.use("/movies/api", moviesRouter);
 app.use(routeNotFoundJsonHandler);
 
 if (POPULATE) {
@@ -41,18 +44,14 @@ if (POPULATE) {
 
 const port = parseInt(process.env.PORT || "3000");
 
-
 if (SETUPCOEF) {
-  setupcoef()
-  .then(() => {
+  setupcoef().then(() => {
     app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+      console.log(`Server listening at http://localhost:${port}`);
     });
   });
 } else {
   app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+    console.log(`Server listening at http://localhost:${port}`);
   });
 }
-
-// recoMovies("60c0b549e9dad9aa14ca54c3").then((reco) => {console.log(reco)})
