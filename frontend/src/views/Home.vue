@@ -2,8 +2,8 @@
   <div class="home">
     <img alt="doge photo" src="../assets/doge.png" class="logo" />
     <h1>DogeMovies</h1>
-    <h2>Top 10</h2>
-    <Caroussel :movies="top10" />
+    <h2>Top 12</h2>
+    <Caroussel :movies="top12" />
 
     <div v-if="user_id === -1" class="login">
       <h3>Connecte-toi pour avoir accès à plus de fonctionnalités</h3>
@@ -44,13 +44,13 @@ export default {
     if (localStorage.user_id) {
       this.user_id = localStorage.user_id;
     }
-    this.fetchTop10();
+    this.fetchTop12();
     this.fetchMyMovies(this.user_id);
     this.fetchReco(this.user_id);
   },
   data: function () {
     return {
-      top10: [],
+      top12: [],
       recommendedMovies: [],
       myMovies: [],
       user_id: -1,
@@ -61,11 +61,11 @@ export default {
     Caroussel,
   },
   methods: {
-    fetchTop10: function () {
+    fetchTop12: function () {
       axios
-        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/top/10`)
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/top/12`)
         .then((response) => {
-          this.top10 = response.data.movies;
+          this.top12 = response.data.movies;
         })
         .catch((error) => {
           console.log(error);
