@@ -7,7 +7,7 @@
       <input v-model="nom" type="text" />
       <label>Prénom</label>
       <input v-model="prenom" type="text" />
-      <button @click="submit">Enregistrer</button>
+      <button type="button" @click="submit">Enregistrer</button>
     </form>
   </div>
 </template>
@@ -16,7 +16,7 @@
 import axios from "axios";
 
 export default {
-  name: "Home",
+  name: "Signin",
   created() {},
   data: function () {
     return {
@@ -27,20 +27,15 @@ export default {
   },
   methods: {
     submit: function () {
-      console.log({
-        firstName: this.prenom,
-        lastName: this.nom,
-        email: this.email,
-      });
       axios
-        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/users/new/`, {
+        .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/users/new`, {
           firstName: this.prenom,
           lastName: this.nom,
           email: this.email,
         })
         .then((response) => {
           console.log("on submit:", response);
-          window.location.href = process.env.VUE_APP_FRONTEND_BASE_URL;
+          window.location.href = "/";
         })
         .catch((error) => {
           console.log(error);

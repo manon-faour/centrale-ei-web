@@ -9,9 +9,10 @@ const moviesRouter = require("./routes/movies");
 const routeNotFoundJsonHandler = require("./services/routeNotFoundJsonHandler");
 const { populateDB } = require("./services/populateDB");
 const {
-  vectorizeMovie,
+  vectorizeMovieStandard,
   recoMovies,
   getCoefPreCalculate,
+  sim,
 } = require("./services/algoReco");
 const { setupcoef } = require("./services/setupcoef");
 
@@ -42,8 +43,13 @@ if (POPULATE) {
   setupcoef();
 }
 
-const port = parseInt(process.env.PORT || "3000");
+const test = [{id:"1", value:"3"}, {id:"1", value:"2"}]
+test.sort(function(a, b) {
+  return parseInt(a.value) - parseInt(b.value);
+})
+console.log(test);
 
+const port = parseInt(process.env.PORT || "3000");
 if (SETUPCOEF) {
   setupcoef().then(() => {
     app.listen(port, () => {
