@@ -164,10 +164,8 @@ const recoMovies = function(userId) {
 
 
         var notesPredict = [];
-        console.log(allMovies)
         for (var i = 0; i < allMovies.length; i++) {
             const movie = allMovies[i];
-            console.log(movie.title, i);
 
             if (!moviesNoted.includes(movie.id)){
                 const vect = await vectorizeMovieStandard(movie.id);
@@ -182,7 +180,6 @@ const recoMovies = function(userId) {
                     notesPredict.push({"id_movie": movie.id, "note": sumCoef/sumAbs})
                 }
             }
-            console.log("end of: ", movie.title);
 
         }
 
