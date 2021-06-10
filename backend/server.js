@@ -55,5 +55,3 @@ if (SETUPCOEF) {
   });
 }
 
-recoMovies("60c0b549e9dad9aa14ca54c3")
-

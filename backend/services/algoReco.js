@@ -153,9 +153,9 @@ const sim = (x, y) => {
 }
 
 const recoMovies = function(userId) {
-
-    UserModel.findById(userId)
-    .then(async (user) => {
+    return new Promise((resolve, reject) => {
+        UserModel.findById(userId)
+        .then(async (user) => {
 
         const tuple= await moviesNotedUser(user);
         const moviesNoted = tuple[0];
@@ -190,8 +190,11 @@ const recoMovies = function(userId) {
         for (var i = 0; i < Math.min(NbRecoMovies, notesPredict.length); i++) {
             recoMovies.push(notesPredict[i].id_movie);
         }
-        return recoMovies;
+        resolve(recoMovies);
     })
+
+    })
+
 
 }
 
