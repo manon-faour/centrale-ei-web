@@ -10,6 +10,8 @@
       <label>Email:</label>
       <input v-model="user_email" />
       <button @click="connect">Connexion</button>
+      <label>Ou bien inscris toi</label>
+      <button @click="signIn">Inscription</button>
     </div>
 
     <div v-if="user_id !== -1" class="perso">
