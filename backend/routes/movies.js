@@ -66,9 +66,9 @@ router.post("/eval", function (req, res) {
     });
 });
 
-router.get("/eval", function (req, res) {
-  const movieId = req.body.movieId;
-  const userId = req.body.userId;
+router.get("/eval/:userId/:movieId", function (req, res) {
+  const movieId = req.params.movieId;
+  const userId = req.params.userId;
   evals
     .find(userId, movieId)
     .then(function (evaluation) {
@@ -83,9 +83,9 @@ router.get("/eval", function (req, res) {
     });
 });
 
-router.post("/mymovies", async function (req, res) {
-  const userId = "60c0b549e9dad9aa14ca54c3";
-  const movieId = req.body.movieId;
+router.post("/mymovies/:userId/:movieId", async function (req, res) {
+  const userId = req.params.userId;
+  const movieId = req.params.movieId;
   try {
     const movie = await MovieModel.findOne({ _id: movieId });
     const user = await UserModel.findOne({ _id: userId });
@@ -98,8 +98,8 @@ router.post("/mymovies", async function (req, res) {
   }
 });
 
-router.get("/mymovies", async function (req, res) {
-  const userId = "60c0b549e9dad9aa14ca54c3";
+router.get("/mymovies/:userId", async function (req, res) {
+  const userId = req.params.userId;
   try {
     const user = await UserModel.findOne({ _id: userId }).populate("myMovies");
     console.log(user);
@@ -109,9 +109,9 @@ router.get("/mymovies", async function (req, res) {
   }
 });
 
-router.delete("/mymovies", function (req, res) {
-  const userId = "60c0b549e9dad9aa14ca54c3";
-  const movieId = req.body.movieId;
+router.delete("/mymovies/:userId/:movieId", function (req, res) {
+  const userId = req.params.userId;
+  const movieId = req.params.movieId;
   UserModel.findOne({ _id: userId })
     .then(function (user) {
       user.myMovies.pull({ _id: movieId });
