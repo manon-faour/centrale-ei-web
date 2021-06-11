@@ -110,6 +110,7 @@ router.post("/new", function (req, res) {
       res.status(201).json(newDocument);
     })
     .catch(function (err) {
+      console.log(err)
       res.status(500).json({ message: err.message });
     });
 });

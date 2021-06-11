@@ -128,7 +128,7 @@ const getCoefPreCalculate = async function () {
             resolve(JSON.parse(jsonString));
         })
 
-    })
+    });
 
 }
 
@@ -225,6 +225,7 @@ const recoMovies = function(userId) {
         var recoMovies = [];
         for (var i = 0; i < Math.min(NbRecoMovies, notesPredict.length); i++) {
             recoMovies.push(notesPredict[notesPredict.length-1-i].id_movie);
+            console.log(notesPredict[notesPredict.length-1-i].note);
         }
         resolve(recoMovies);
     })

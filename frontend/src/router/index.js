@@ -4,6 +4,8 @@ import Details from "../views/Details.vue";
 import Signin from "../views/Signin.vue";
 import Results from "../views/Results";
 import Genres from "../views/Genres";
+import Add from "../views/Add.vue";
+
 const routes = [
   {
     path: "/",
@@ -29,6 +31,11 @@ const routes = [
     path: "/genres",
     name: "Genres",
     component: Genres,
+  },
+  {
+    path: "/add",
+    name: "Add",
+    component: Add,
   },
 ];
 

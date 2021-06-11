@@ -2,8 +2,6 @@
   <div class="home">
     <img alt="doge photo" src="../assets/doge.png" class="logo" />
     <h1>DogeMovies</h1>
-    <h2>Top 12</h2>
-    <Caroussel :movies="top12" />
 
     <div v-if="user_id === -1" class="login">
       <h3>Connecte-toi pour avoir accès à plus de fonctionnalités</h3>
@@ -16,6 +14,9 @@
         <button>Inscription</button>
       </router-link>
     </div>
+
+    <h2>Top 12</h2>
+    <Caroussel :movies="top12" />
 
     <div v-if="user_id !== -1" class="perso">
       <h2>Pour vous</h2>
