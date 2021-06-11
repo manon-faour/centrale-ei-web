@@ -34,7 +34,7 @@ export default {
           lastName: this.nom,
           email: this.email,
         })
-        .then((response) => {
+        .then(() => {
           this.getId(this.email);
         })
         .catch((error) => {
