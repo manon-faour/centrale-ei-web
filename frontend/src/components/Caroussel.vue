@@ -51,7 +51,7 @@ export default {
   data: function () {
     return {
       currentTab: 1,
-      moviesToDisplay: 4,
+      moviesToDisplay: 3,
       animation: "",
       animated: false,
     };
@@ -136,6 +136,23 @@ export default {
       this.animation = "animate-next";
       setTimeout(this.animationNextStop, 1000);
     },
+
+    updateMoviesToDisplay: function () {
+      if (window.innerWidth < 800) {
+        this.moviesToDisplay = 2;
+      } else if (window.innerWidth < 1200) {
+        this.moviesToDisplay = 3;
+      } else {
+        this.moviesToDisplay = 4;
+      }
+    },
+  },
+  created: function () {
+    this.updateMoviesToDisplay();
+    window.addEventListener("resize", this.updateMoviesToDisplay);
+  },
+  unmounted: function () {
+    window.removeEventListener("resize", this.updateMoviesToDisplay);
   },
 };
 </script>
@@ -149,11 +166,13 @@ export default {
 
 .movie {
   transition: 0.4s ease-in-out;
-  margin: 0px 25px;
+  margin: 0vh 2vw;
+  width: 40vw;
+  min-width: 120px;
 }
 
 .movie-container {
-  width: 1200px;
+  width: 70vw;
   padding: 10px 0px;
   overflow: hidden;
 }
@@ -162,21 +181,21 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  transform: translateX(-1200px);
+  transform: translateX(-70vw);
 }
 
 .displayed-movies {
   display: flex;
+  width: 70vw;
   flex-direction: row;
   justify-content: center;
-  min-width: 1200px;
 }
 
 .hidden-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 1200px;
+  width: 70vw;
 }
 
 @keyframes next {

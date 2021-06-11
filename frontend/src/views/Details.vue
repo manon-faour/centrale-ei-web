@@ -345,12 +345,15 @@ export default {
   display: flex;
   align-items: flex-start;
   margin: 50px;
+  flex-wrap: wrap;
 }
 
 .infos {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 50%;
+  max-width: 800px;
+  min-width: 300px;
   margin: 30px;
   text-align: justify;
 }
@@ -358,6 +361,9 @@ export default {
 .poster {
   border-radius: 10px;
   margin: 50px;
+  width: 30vw;
+  min-width: 250px;
+  max-width: 400px;
 }
 .star > img {
   width: 50px;
@@ -391,6 +397,7 @@ export default {
 .genres {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .genre {
   font-size: 1em;
