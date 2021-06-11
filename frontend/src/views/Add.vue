@@ -10,8 +10,8 @@
       <input v-model="release_date" type="text" />
       <label>Chemin de l'affiche</label>
       <input v-model="poster_path" type="text" />
+      <label>Genres</label>
       <div class="genre-selector">
-        <label>Genres</label>
         <button
           v-for="genre in dictGenres"
           :key="genre.id"
@@ -245,6 +245,7 @@ form {
   display: flex;
   flex-direction: column;
   width: 20%;
+  min-width: 300px;
   margin: 50px;
 }
 input {
@@ -264,7 +265,9 @@ button {
 }
 
 .genre-selector {
-  display: inline;
+  display: flex;
+  max-width: 500px;
+  flex-wrap: wrap;
 }
 
 .submit {

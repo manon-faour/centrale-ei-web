@@ -167,9 +167,7 @@ export default {
 .movie {
   transition: 0.4s ease-in-out;
   margin: 0vh 2vw;
-  width: 40vw;
-  min-width: 80px;
-  max-width: 300px;
+  width: 250px;
 }
 
 .movie-container {
@@ -189,15 +187,16 @@ export default {
   display: flex;
   width: 70vw;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
+  min-width: 70vw;
   align-items: flex-start;
 }
 
 .hidden-movies {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 70vw;
+  justify-content: space-around;
+  min-width: 70vw;
   align-items: flex-start;
 }
 
