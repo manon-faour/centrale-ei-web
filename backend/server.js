@@ -43,11 +43,7 @@ if (POPULATE) {
   setupcoef();
 }
 
-const test = [{id:"1", value:"3"}, {id:"1", value:"2"}]
-test.sort(function(a, b) {
-  return parseInt(a.value) - parseInt(b.value);
-})
-console.log(test);
+
 
 const port = parseInt(process.env.PORT || "3000");
 if (SETUPCOEF) {

@@ -36,6 +36,21 @@ export default {
         })
         .then((response) => {
           console.log("on submit:", response);
+          this.getId(this.email);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getId: function (user_mail) {
+      axios
+        .get(
+          `${process.env.VUE_APP_BACKEND_BASE_URL}/users/email/` +
+            String(user_mail)
+        )
+        .then((response) => {
+          console.log("connected: ", response);
+          localStorage.user_id = response.data.user._id;
           window.location.href = "/";
         })
         .catch((error) => {
