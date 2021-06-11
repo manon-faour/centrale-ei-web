@@ -164,6 +164,7 @@ export default {
 .genres {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .not-selected {
