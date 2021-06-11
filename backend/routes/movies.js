@@ -69,6 +69,28 @@ router.get("/search/:query", function (req, res) {
 });
 
 /**
+ * returns movies which belongs to specified genres
+ */
+router.get("/search/genre/:ids", function (req, res) {
+  const all_ids = req.params.ids.split("-").map(function (item) {
+    return parseInt(item, 10);
+  });
+  MovieModel.find({})
+    .then((movies) => {
+      var movies_with_genres = [];
+      movies.forEach((movie) => {
+        if (all_ids.every((v) => movie.genre_ids.includes(v))) {
+          movies_with_genres.push(movie);
+        }
+      });
+      res.status(201).json({ movies: movies_with_genres });
+    })
+    .catch(function (err) {
+      res.status(500).json({ message: err.message });
+    });
+});
+
+/**
  * posts a new movie to add to the collection
  */
 router.post("/new", function (req, res) {
@@ -105,7 +127,6 @@ router.post("/eval", function (req, res) {
     .then(function (newDocument) {
       rating.average(movieId);
       recoMovies(userId).then(function (recommended) {
-        console.log("recommended: ", recommended);
         UserModel.findOneAndUpdate(
           {
             _id: userId,

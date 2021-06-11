@@ -1,6 +1,6 @@
 <template>
   <div class="signin">
-    <h2>Inscription</h2>
+    <h2>Ajouter un film</h2>
     <form>
       <label>Titre</label>
       <input v-model="title" type="text" />
@@ -201,23 +201,18 @@ export default {
   },
   methods: {
     submit: function () {
-      console.log("post: ", {
-        title: this.title,
-        description: this.description,
-        release_date: this.release_date,
-        poster_path: this.poster_path,
-        genre: this.genres,
-      });
       axios
         .post(`${process.env.VUE_APP_BACKEND_BASE_URL}/movies/new`, {
           title: this.title,
           description: this.description,
           release_date: this.release_date,
           poster_path: this.poster_path,
-          genre: this.genres,
+          genre_ids: this.genres,
+          average_rating: 0,
         })
         .then((response) => {
           console.log("on submit:", response);
+          window.location.href = "/details?id=" + response.data._id;
         })
         .catch((error) => {
           console.log(error);

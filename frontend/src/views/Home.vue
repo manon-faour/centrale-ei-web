@@ -80,7 +80,6 @@ export default {
               String(user_id)
           )
           .then((response) => {
-            console.log("fetchMyMovies:", response.data.movies);
             this.myMovies = response.data.movies;
           })
           .catch((error) => {
@@ -89,7 +88,6 @@ export default {
       }
     },
     fetchReco: function (user_id) {
-      console.log("try to fetch reco", user_id);
       if (user_id !== -1) {
         axios
           .get(
@@ -97,7 +95,6 @@ export default {
               String(user_id)
           )
           .then((response) => {
-            console.log("fetchReco:", response.data.movies);
             this.recommendedMovies = response.data.movies;
           })
           .catch((error) => {
@@ -112,7 +109,6 @@ export default {
             String(user_mail)
         )
         .then((response) => {
-          console.log("connected: ", response);
           this.user_id = response.data.user._id;
           localStorage.user_id = response.data.user._id;
           this.fetchMyMovies(this.user_id);
