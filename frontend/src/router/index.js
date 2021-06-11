@@ -3,6 +3,8 @@ import Home from "../views/Home.vue";
 import Details from "../views/Details.vue";
 import Signin from "../views/Signin.vue";
 import Results from "../views/Results";
+import Add from "../views/Add.vue";
+
 const routes = [
   {
     path: "/",
@@ -23,6 +25,11 @@ const routes = [
     path: "/results",
     name: "Results",
     component: Results,
+  },
+  {
+    path: "/add",
+    name: "Add",
+    component: Add,
   },
 ];
 

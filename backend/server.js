@@ -43,8 +43,6 @@ if (POPULATE) {
   setupcoef();
 }
 
-
-
 const port = parseInt(process.env.PORT || "3000");
 if (SETUPCOEF) {
   setupcoef().then(() => {
