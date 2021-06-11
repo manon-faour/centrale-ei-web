@@ -10,6 +10,9 @@
         <label for="email">Entrez votre email </label>
         <input v-model="user_email" id="email" />
       </div>
+      <div v-if="emailAbsent" class="error">
+        Cette adresse n'a pas de compte. Créez un compte pour vous connecter
+      </div>
       <button @click="connect">Connexion</button>
       <router-link to="/Signin" tag="button">
         <button>Inscription</button>
@@ -52,6 +55,7 @@ export default {
   },
   data: function () {
     return {
+      emailAbsent: false,
       top12: [],
       recommendedMovies: [],
       myMovies: [],
@@ -117,6 +121,7 @@ export default {
           window.location.reload();
         })
         .catch((error) => {
+          this.emailAbsent = true;
           console.log(error);
         });
     },
@@ -136,6 +141,10 @@ export default {
 
 h1 {
   font-size: 3em;
+}
+
+.error {
+  color: red;
 }
 
 .logo {
