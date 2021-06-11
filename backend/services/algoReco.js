@@ -128,7 +128,7 @@ const getCoefPreCalculate = async function () {
             resolve(JSON.parse(jsonString));
         })
 
-    })
+    });
 
 }
 
