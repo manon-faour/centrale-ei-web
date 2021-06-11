@@ -10,6 +10,9 @@
       <input v-model="prenom" type="text" />
       <button type="button" @click="submit">Enregistrer</button>
     </form>
+    <div v-if="emailUsed" class="error">
+      Cette adress mail est déjà utilisée
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,7 @@ export default {
       prenom: "",
       npm: "",
       email: "",
+      emailUsed: false,
     };
   },
   methods: {
@@ -38,6 +42,7 @@ export default {
           this.getId(this.email);
         })
         .catch((error) => {
+          this.emailUsed = true;
           console.log(error);
         });
     },
@@ -60,6 +65,10 @@ export default {
 </script>
 
 <style scoped>
+.error {
+  color: red;
+}
+
 .signin {
   display: flex;
   flex-direction: column;
