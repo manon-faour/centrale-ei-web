@@ -8,7 +8,7 @@
       <h3>Connecte-toi pour avoir accès à plus de fonctionnalités</h3>
       <div class="input-field">
         <label for="email">Entrez votre email </label>
-        <input v-model="user_email" id="email" />
+        <input v-model="user_email" id="email" @keyup.enter="connect" />
       </div>
       <button @click="connect">Connexion</button>
       <router-link to="/Signin" tag="button">
