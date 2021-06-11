@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Details from "../views/Details.vue";
 import Signin from "../views/Signin.vue";
 import Results from "../views/Results";
+import Genres from "../views/Genres";
 import Add from "../views/Add.vue";
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: "/results",
     name: "Results",
     component: Results,
+  },
+  {
+    path: "/genres",
+    name: "Genres",
+    component: Genres,
   },
   {
     path: "/add",

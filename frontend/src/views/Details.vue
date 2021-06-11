@@ -10,6 +10,7 @@
       <div class="genres">
         <div
           class="genre"
+          v-on:click="redirectGenre(genre_id)"
           v-for="genre_id in movie.genre_ids"
           v-bind:key="genre_id"
         >
@@ -262,6 +263,12 @@ export default {
     },
   },
   methods: {
+    redirectGenre: function (genre_id) {
+      this.$router.push({
+        name: "Genres",
+        query: { genres: genre_id },
+      });
+    },
     fetchMovie: function () {
       axios
         .get(
