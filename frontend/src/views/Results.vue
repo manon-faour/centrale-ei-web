@@ -38,10 +38,12 @@ export default {
   },
   methods: {
     fetchResults: function () {
+      var url = "/movies/search/";
+      if (this.searchQuery === "") {
+        url = "/movies";
+      }
       axios
-        .get(
-          `${process.env.VUE_APP_BACKEND_BASE_URL}/movies/search/${this.searchQuery}`
-        )
+        .get(`${process.env.VUE_APP_BACKEND_BASE_URL}${url}${this.searchQuery}`)
         .then((response) => {
           // Do something if call succeeded
           this.movies = response.data.movies;
