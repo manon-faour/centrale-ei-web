@@ -358,6 +358,7 @@ export default {
 .poster {
   border-radius: 10px;
   margin: 50px;
+  width: 20vw;
 }
 .star > img {
   width: 50px;

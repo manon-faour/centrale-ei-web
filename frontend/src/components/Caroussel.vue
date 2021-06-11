@@ -149,11 +149,12 @@ export default {
 
 .movie {
   transition: 0.4s ease-in-out;
-  margin: 0px 25px;
+  margin: 0vh 2vw;
+  width: 20vw;
 }
 
 .movie-container {
-  width: 1200px;
+  width: 60vw;
   padding: 10px 0px;
   overflow: hidden;
 }
@@ -162,21 +163,21 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  transform: translateX(-1200px);
+  transform: translateX(-60vw);
 }
 
 .displayed-movies {
   display: flex;
+  width: 60vw;
   flex-direction: row;
   justify-content: center;
-  min-width: 1200px;
 }
 
 .hidden-movies {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 1200px;
+  width: 60vw;
 }
 
 @keyframes next {
