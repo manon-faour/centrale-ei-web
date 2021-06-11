@@ -66,6 +66,7 @@ h2 {
 .movie-results-container {
   display: flex;
   flex-flow: row wrap;
+  flex-grow: 0;
   justify-content: space-evenly;
   align-content: space-between;
   align-items: flex-end;
@@ -73,5 +74,6 @@ h2 {
 
 .movie {
   margin: 20px;
+  max-width: 300px;
 }
 </style>

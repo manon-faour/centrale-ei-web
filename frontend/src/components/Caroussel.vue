@@ -138,7 +138,9 @@ export default {
     },
 
     updateMoviesToDisplay: function () {
-      if (window.innerWidth < 800) {
+      if (window.innerWidth < 500) {
+        this.moviesToDisplay = 1;
+      } else if (window.innerWidth < 800) {
         this.moviesToDisplay = 2;
       } else if (window.innerWidth < 1200) {
         this.moviesToDisplay = 3;
