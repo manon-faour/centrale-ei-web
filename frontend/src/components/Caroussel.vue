@@ -168,7 +168,7 @@ export default {
   transition: 0.4s ease-in-out;
   margin: 0vh 2vw;
   width: 40vw;
-  min-width: 120px;
+  min-width: 80px;
 }
 
 .movie-container {
