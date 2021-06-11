@@ -231,6 +231,16 @@ export default {
 </script>
 
 <style scoped>
+.genre {
+  display: flex;
+  font-size: 1em;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+  transition: 0.4s;
+  align-items: center;
+}
+
 .signin {
   display: flex;
   flex-direction: column;
