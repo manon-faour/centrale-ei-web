@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="doge photo" src="../assets/doge.png" class="logo" />
     <h1>DogeMovies</h1>
-    <router-link to="/add"><button>Ajouter un film</button></router-link>
+    <router-link to="/add"><button>+ Ajouter un film</button></router-link>
 
     <div v-if="user_id === -1" class="login">
       <h3>Connecte-toi pour avoir accès à plus de fonctionnalités</h3>
