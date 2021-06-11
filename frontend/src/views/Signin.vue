@@ -76,6 +76,7 @@ form {
   display: flex;
   flex-direction: column;
   width: 20%;
+  min-width: 300px;
   margin: 50px;
 }
 input {
