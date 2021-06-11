@@ -5,7 +5,7 @@
       <label>Titre</label>
       <input v-model="title" type="text" />
       <label>Description</label>
-      <input v-model="description" type="text" />
+      <textarea v-model="description" type="text" />
       <label>Date de Sortie (AAAA-MM-JJ)</label>
       <input v-model="release_date" type="text" />
       <label>Chemin de l'affiche</label>
@@ -258,9 +258,13 @@ form {
   min-width: 300px;
   margin: 50px;
 }
-input {
+input,
+textarea {
   margin: 10px;
   margin-bottom: 20px;
+}
+textarea {
+  height: 100px;
 }
 label {
   font-size: 1.3em;
