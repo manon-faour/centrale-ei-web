@@ -259,7 +259,6 @@ export default {
   watch: {
     userVote: function (newVote) {
       this.displayedVote = newVote;
-      console.log(this.newVote);
     },
   },
   methods: {
@@ -277,7 +276,6 @@ export default {
         .then((response) => {
           this.movie = response.data.movie[0];
           this.loaded = true;
-          console.log(this.movie);
         })
         .catch((error) => {
           console.log(error);
@@ -291,7 +289,6 @@ export default {
         .then((response) => {
           this.userVote = response.data.eval;
           this.displayedVote = response.data.eval;
-          console.log(this.userVote);
         })
         .catch((error) => {
           console.log(error);
@@ -337,7 +334,6 @@ export default {
           this.added = response.data.movies
             .map((movie) => movie._id)
             .includes(this.$route.query.id);
-          console.log(response.data.movie);
         })
         .catch((error) => {
           console.log(error);

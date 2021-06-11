@@ -15,7 +15,6 @@ const average = async function (movieId) {
   }
   const number = evals.length;
   const movie = await MovieModel.findOne({ _id: movieId });
-  console.log(note / number);
   movie.average_rating = note / number;
   movie.save();
 };

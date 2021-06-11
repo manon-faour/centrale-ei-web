@@ -110,7 +110,6 @@ router.post("/new", function (req, res) {
       res.status(201).json(newDocument);
     })
     .catch(function (err) {
-      console.log(err)
       res.status(500).json({ message: err.message });
     });
 });
@@ -128,7 +127,6 @@ router.post("/eval", function (req, res) {
     .then(function (newDocument) {
       rating.average(movieId);
       recoMovies(userId).then(function (recommended) {
-        console.log("recommended: ", recommended);
         UserModel.findOneAndUpdate(
           {
             _id: userId,

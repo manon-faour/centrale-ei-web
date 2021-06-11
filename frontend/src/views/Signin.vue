@@ -35,7 +35,6 @@ export default {
           email: this.email,
         })
         .then((response) => {
-          console.log("on submit:", response);
           this.getId(this.email);
         })
         .catch((error) => {
@@ -49,7 +48,6 @@ export default {
             String(user_mail)
         )
         .then((response) => {
-          console.log("connected: ", response);
           localStorage.user_id = response.data.user._id;
           window.location.href = "/";
         })
