@@ -68,4 +68,8 @@ h2 {
   align-content: space-between;
   align-items: flex-end;
 }
+
+.movie {
+  margin: 20px;
+}
 </style>

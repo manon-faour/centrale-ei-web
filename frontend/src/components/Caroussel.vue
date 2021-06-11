@@ -169,6 +169,7 @@ export default {
   margin: 0vh 2vw;
   width: 40vw;
   min-width: 80px;
+  max-width: 300px;
 }
 
 .movie-container {
@@ -189,6 +190,7 @@ export default {
   width: 70vw;
   flex-direction: row;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .hidden-movies {
@@ -196,6 +198,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   width: 70vw;
+  align-items: flex-start;
 }
 
 @keyframes next {

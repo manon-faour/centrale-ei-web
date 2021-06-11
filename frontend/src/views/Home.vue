@@ -186,8 +186,12 @@ h2 {
   font-size: 1.5em;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: center;
+}
+.input-field label {
+  min-width: 300px;
 }
 .input-field > input {
   margin: 0px 10px;
